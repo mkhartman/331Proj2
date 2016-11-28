@@ -95,6 +95,7 @@ function findStudentsInMeeting($meetingID)
     <title>Advisor Homepage</title>
 </head>
 <body>
+<?php include '../../header.php' ?>
 <h1>
     Adviser Home
 </h1>

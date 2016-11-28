@@ -64,6 +64,7 @@ if ($_POST) {
     Student Login Page
 </h1>
 
+<?php '../header.php' ?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
   <label>E-mail</label><input type="text" name="email">

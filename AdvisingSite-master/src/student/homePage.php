@@ -31,6 +31,7 @@ if($_SESSION["HAS_LOGGED_IN"]){
 </head>
 <body>
       <h1>Student Home</h1>
+<?php include '../header.php' ?>
 
 <?php 
 if ($_SESSION["HAS_LOGGED_IN"]) { 

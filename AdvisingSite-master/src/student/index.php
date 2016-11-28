@@ -155,6 +155,7 @@ float: left;
 
 </head>
 <body>
+<?php include '../header.php' ?>
 
 <div class="sign-up">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
