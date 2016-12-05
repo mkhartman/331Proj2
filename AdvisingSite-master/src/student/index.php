@@ -1,5 +1,6 @@
 <?php
 
+include('header.php');
 include('../CommonMethods.php');
  $debug = true;
  $COMMON = new Common($debug);
@@ -130,7 +131,7 @@ if($_POST){
 <html>
 <head>
 
-<style = "text/css">
+<!-- <style = "text/css">
   .error {color: #FF0000;}
 	  select{
 	  display: inlinr-block;
@@ -148,44 +149,43 @@ text-align: left;
 display: inline-block;
 float: left;
 }
-</style>   
-
+</style> 
+-->
 <title>Student Registration</title>
 
 </head>
-
 <body>
 
+<div class="sign-up">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	  
+ <h1>Welcome to the UMBC Science department advising site.</h1>
+ <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
- <h1>Welcome! Please complete the registration form.</h1>
+<div class="container">
 
-<br>
-  <label>Email</label><input type="text" name="email">
+    <h2>Sign up.</h2>
+  <label></label><input placeholder="E-mail" type="text" name="email">
   <span class="error"> <?php echo $email_error_message;?></span>
 <br>
 
-<br>
-  <label>First Name</label><input type="text" name="fName">
+  <label></label><input placeholder="First Name" type="text" name="fName">
   <span class="error"> <?php echo $fName_error_message;?></span>
 <br>
 
+ <label></label><input placeholder="Middle Name" type="text" name="mName">
 <br>
- <label>Middle Name</label><input type="text" name="mName">
 <br>
-
-<br>
-  <label>Last Name</label><input type="text" name="lName">
+  <label></label><input placeholder="Last Name" type="text" name="lName">
   <span class="error"> <?php echo $lName_error_message;?></span>
 <br>
 
-<br>
-  <label>School ID</label><input type="varchar" name="schoolID">
-  <span class="error"> <?php echo $schoolID_error_message;?></span>
+  <label></label><input placeholder="Student ID" type="varchar" name="schoolID">
+ 
+ <span class="error"> <?php echo $schoolID_error_message;?></span>
 <br>
 
-<br>
-  <label>Major</label><!--<input type="text" name="major">-->
+  <label></label><!--<input class="input" type="text" name="major">-->
 	  <select name="major">
 	  <option value="">Please choose a major</option>
           <option value="BioSciBA">Biological Sciences BA</option>
@@ -201,13 +201,16 @@ float: left;
 <br>
 
 <br>
-<input type="submit">
+<input class="submit" type="submit" value="Submit">
 <br>
-
 </form>
 </body>
 
+<h3><a href="login.php"><font size="3"> Have you already registered? Log in here. </font></a></h3>
+  
+</div> <!--end of container-->
 
-<br>
-<h3><a href="login.php"> Have you already registered? Log in here. </a></h3> 
+
+</div> <!--end of sign-up-->
+
 </html>
