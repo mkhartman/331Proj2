@@ -87,3 +87,10 @@ CREATE TABLE IF NOT EXISTS `StudentMeeting` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 
+
+--
+-- Constraints for table `StudentMeeting`
+--
+ALTER TABLE `StudentMeeting`
+  ADD CONSTRAINT `StudentMeeting_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`StudentID`),
+  ADD CONSTRAINT `StudentMeeting_ibfk_2` FOREIGN KEY (`MeetingID`) REFERENCES `Meeting` (`meetingID`);
