@@ -1,0 +1,89 @@
+--
+-- Table structure for table `Advisor`
+--
+
+CREATE TABLE IF NOT EXISTS `Advisor` (
+  `advisorID` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(254) NOT NULL,
+  `firstName` text NOT NULL,
+  `middleName` text,
+  `lastName` text NOT NULL,
+  `buildingName` text NOT NULL,
+  `roomNumber` text NOT NULL,
+  PRIMARY KEY (`advisorID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+
+
+--
+-- Table structure for table `Meeting`
+--
+
+CREATE TABLE IF NOT EXISTS `Meeting` (
+  `meetingID` int(11) NOT NULL AUTO_INCREMENT,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `buildingName` text NOT NULL,
+  `roomNumber` text NOT NULL,
+  `meetingType` tinyint(1) NOT NULL COMMENT 'FALSE is an individual meeting. TRUE is a group meeting.',
+  `numStudents` tinyint(2) NOT NULL COMMENT 'Keeps track of the number of students in the meeting.',
+  PRIMARY KEY (`meetingID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+
+--
+-- Table structure for table `AdvisorMeeting`
+--
+
+CREATE TABLE IF NOT EXISTS `AdvisorMeeting` (
+  `AdvisorMeetingID` int(11) NOT NULL AUTO_INCREMENT,
+  `advisorID` int(7) NOT NULL,
+  `meetingID` int(7) NOT NULL,
+  PRIMARY KEY (`AdvisorMeetingID`),
+  KEY `advisorID` (`advisorID`),
+  KEY `meetingID` (`meetingID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+
+--
+-- Constraints for table `AdvisorMeeting`
+--
+ALTER TABLE `AdvisorMeeting`
+  ADD CONSTRAINT `AdvisorMeeting_ibfk_1` FOREIGN KEY (`meetingID`) REFERENCES `Meeting` (`meetingID`),
+  ADD CONSTRAINT `AdvisorMeeting_ibfk_2` FOREIGN KEY (`advisorID`) REFERENCES `Advisor` (`advisorID`);
+
+
+
+--
+-- Table structure for table `Student`
+--
+
+CREATE TABLE IF NOT EXISTS `Student` (
+  `StudentID` int(7) NOT NULL AUTO_INCREMENT,
+  `email` text NOT NULL,
+  `firstName` text NOT NULL,
+  `middleName` text,
+  `lastName` text NOT NULL,
+  `schoolID` varchar(7) NOT NULL,
+  `major` text NOT NULL COMMENT 'coming from a dropdown list',
+  PRIMARY KEY (`StudentID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+
+
+--
+-- Table structure for table `StudentMeeting`
+--
+
+CREATE TABLE IF NOT EXISTS `StudentMeeting` (
+  `StudentMeetingID` int(11) NOT NULL AUTO_INCREMENT,
+  `StudentID` int(7) NOT NULL,
+  `MeetingID` int(7) NOT NULL,
+  PRIMARY KEY (`StudentMeetingID`),
+  KEY `StudentID` (`StudentID`),
+  KEY `MeetingID` (`MeetingID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+
