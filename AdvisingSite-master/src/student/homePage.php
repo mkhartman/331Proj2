@@ -176,11 +176,13 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 
 <html>
 
-<?php
-  //<br>
-  //<a href="viewMeeting.php">View Scheduled Appointment</a>
-  //<br>
-?>
+
+<!-- the button that student click if they want to edit their info -->
+<form action="changeInfo.php" method="post" name="EditInfo">
+<button name="EditInfo" type="submit" >Edit my Info</button>
+</form>
+  
+
 
 <br>
 <a href="chooseMeeting.php">Schedule Advising Appointment</a>

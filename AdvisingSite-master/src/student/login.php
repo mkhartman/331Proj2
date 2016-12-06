@@ -8,8 +8,7 @@
 
 
 <?php
-  include('header.php');
-  include '../CommonMethods.php';  
+include '../CommonMethods.php';  
 
   //declare and define empty login_error
   $login_error = "";
@@ -48,7 +47,10 @@ if ($_POST) {
       $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];
       $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];
       $_SESSION["MAJOR"] = $studentDict["major"];
-      
+      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];
+      $_SESSION["LAST_NAME"] = $studentDict["lastName"];
+
+
       //redirectedd to index.php
       header('Location: homePage.php');
       
@@ -58,25 +60,21 @@ if ($_POST) {
 }
 ?>
 
-<div class="sign-up">
-<h1>Student Login Page</h1>
- <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
+<h1>
+    Student Login Page
+</h1>
 
- <div class ="login">
-<div
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-  <label>E-mail </label><input type="text" name="email">
+  <label>E-mail</label><input type="text" name="email">
   <span class="error"> <?php echo $login_error;?></span>
   <br>
   <br>
-  <label><input class="submit" type="submit" value="Submit"></label>
+  <label><input type="submit"></label>
 
 </form>
 
-<h3><a href="index.php"><font size="3">Don't have an account? Register here.</a></h3>
+<h3><a href="index.php">Don't have an account? Register here.</a></h3>
 
-</div>
-</div>
 
 
