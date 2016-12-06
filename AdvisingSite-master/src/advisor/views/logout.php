@@ -7,5 +7,5 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     sleep(1);
 }
 
-header('Location: login.php');
+header('Location: index.php');
 ?>

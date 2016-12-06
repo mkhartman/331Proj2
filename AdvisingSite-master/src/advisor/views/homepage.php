@@ -4,7 +4,7 @@ session_start();
 $allRows = "";
 
 if (!isset($_SESSION["HAS_LOGGED_IN"])) {
-    header('Location: login.php');
+    header('Location: index.php');
 }
 
 
@@ -106,6 +106,10 @@ function findStudentsInMeeting($meetingID)
 
     <a href="logout.php">
         <button type="button">Log Out</button>
+    </a>
+
+    <a href="register.php">
+	<button type="button">Create New Advisor</button>
     </a>
 
     <hr>
