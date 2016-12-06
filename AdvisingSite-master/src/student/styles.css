@@ -19,8 +19,8 @@ header {
 
 .sign-up {
     text-align: center;
-    padding-left: 10px;
-    padding-bottom: 5px;
+    padding-left: 2%;
+    padding-bottom: 1%;
     position: relative;
     margin-top: 40px;
     margin-left: 35px;
@@ -33,7 +33,7 @@ header {
 .container {
     font-family: Georgia;
     text-align: left;
-    padding-left: 20px;
+    padding-left: 2%;
     position: relative;
     margin-left: 550px; 
     height: 100%;
@@ -48,7 +48,9 @@ header {
     text-align: left;
     position: relative;
     margin-left: 550px; 
-    padding: 140px;
+    padding-top: 4%;
+    padding-left: 2%;
+    padding-bottom: 8%;
     height: 100%;
     background-color: white;
     max-width: 400px;
@@ -59,7 +61,7 @@ header {
 input {
     position: relative;
     max-width: 100%;
-    width: 400px;
+    width: 380px;
     padding: 10px;
     margin: 5px;
     border: 0;
@@ -68,6 +70,15 @@ input {
     transition: background-color .2s ease-in-out;
 }
 
+select {    
+    position: relative;
+    max-width: 100%;
+    width: 400px;
+    padding: 10px;
+    margin: 5px;
+    background-color: #f6f0bb;
+    border: 0px;
+}
 
 .submit {
     font-family: Georgia;
