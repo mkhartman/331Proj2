@@ -1,4 +1,5 @@
 <?php
+include ('../../student/header.php');
 session_start();
 
 $allRows = "";
@@ -205,6 +206,18 @@ function findStudentsInMeeting($meetingID)
                 ?>
             </li>
 
+<li>
+                <label>
+                    Meeting End Date
+                    <input type="datetime-local" name="meetingEndTime">
+                </label>
+                <?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
+		  echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
+		  unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
+                }
+                ?>
+            </li>
             <li>
                 <label>
                     Building Name
@@ -235,8 +248,8 @@ function findStudentsInMeeting($meetingID)
                 <label>
                     Type of Meeting:
                     <select name="meetingType">
-                        <option value="individual">Individual</option>
                         <option value="group">Group</option>
+                        <option value="individual">Individual</option>
                     </select>
                 </label>
             </li>

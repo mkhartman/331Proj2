@@ -8,13 +8,14 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
 
     // Parse through variables from form
     $start = $_POST["meetingStartTime"];
+    $end = $_POST["meetingEndTime"];
     $bName = $_POST["buildingName"];
     $rNumber = $_POST["roomNumber"];
     $typeOfMeeting = $_POST["meetingType"];
-    $isIndividual = false;
+    $isGroup = false;
 
     if ($typeOfMeeting == "group") {
-        $isIndividual = true;
+        $isGroup = true;
     }
 
     $numOfErrors = 0;
@@ -41,8 +42,8 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
         $startDate = new DateTime($start);
 
         // Add 30 mins
-        $endDate = new DateTime($start);
-        $endDate->add(new DateInterval('PT30M'));
+        $endDate = new DateTime($end);
+
 
         // Storing dates into string format for MySQL
         $formattedStartDate = $startDate->format('Y-m-d H:i:s');
@@ -55,7 +56,7 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
         $insertIntoMeetings = "
           INSERT INTO Meeting(start,end,buildingName,roomNumber, meetingType, numStudents)
           VALUES (
-            '$formattedStartDate','$formattedEndDate','$bName', '$rNumber', '$isIndividual', 0
+            '$formattedStartDate','$formattedEndDate','$bName', '$rNumber', '$isGroup', 0
           )
         ";
 
