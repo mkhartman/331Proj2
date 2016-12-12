@@ -57,13 +57,15 @@ if ($_POST) {
       
       //redirectedd to index.php
       header('Location: homePage.php');
+      
+      // Can only do function overloading in classes, why need to pass empty string
     }
   }
 }
 ?>
 
 <div class="container">
-<h1>Welcome to the CMNS advising site</h1>
+<h1>Welcome to the UMBC Science department advising site</h1>
  <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
  <div class ="login">
@@ -77,7 +79,7 @@ if ($_POST) {
   <br>
   <label><input class="submit" type="submit" value="Log In"></label>
 </form>
-<br>
+
 <h3><a href="index.php"><font size="3">Don't have an account? Register here.</a></h3>
 
 </div>
