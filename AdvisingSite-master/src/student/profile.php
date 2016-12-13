@@ -7,7 +7,8 @@
 </head>
 
 <body>
-
+-<?php include '../header.php' ?>
+    
 <?php
 require_once("basics/navbar.php");
 ?>
