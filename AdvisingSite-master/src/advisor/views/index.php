@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../utils/dbconfig.php';
 
 // Checks to see if the user is logged in, if so it redirects them to homepage
 if (isset($_SESSION["HAS_LOGGED_IN"])) {
@@ -7,95 +8,67 @@ if (isset($_SESSION["HAS_LOGGED_IN"])) {
         header('Location: homepage.php');
     }
 }
+
+if ($_POST) {
+    $email = strtolower($_POST["email"]);
+
+    $open_connection = connectToDB();
+
+    // Searxch if advisor email exists in DB
+    $search_advisor = "SELECT * FROM Advisor WHERE email='$email'";
+
+    $queryOfSearchAdvisor = $open_connection->query($search_advisor);
+
+    $num_rows = mysqli_num_rows($queryOfSearchAdvisor);
+    // Check whether or not there has been a successful adviser creation
+
+
+    if ($num_rows == 1) {
+        session_start();
+        // Translate the SQL Query into a dictioanry
+        $advisorDict = mysqli_fetch_assoc($queryOfSearchAdvisor);
+
+        // Assigning to session values based on what data is found
+        $_SESSION["HAS_LOGGED_IN"] = true;
+        $_SESSION["ADVISOR_EMAIL"] = $advisorDict["email"];
+        $_SESSION["ADVISOR_ID"] = $advisorDict["advisorID"];
+        $_SESSION["ADVISOR_FNAME"] = $advisorDict["firstName"];
+        $_SESSION["ADVISOR_LNAME"] = $advisorDict["lastName"];
+        $_SESSION["ADVISOR_BLDG_NAME"] = $advisorDict["buildingName"];
+        $_SESSION["ADVISOR_RM_NUM"] = $advisorDict["roomNumber"];
+
+        // Redirecting to homepage.php
+        header('Location: homepage.php');
+    } else {
+        echo "ERROR: 404, Login FAILED";
+    }
+
+    $open_connection->close();
+}
 ?>
 
 <html>
 <head>
-    <title>
-        Adviser Registration
-    </title>
+    <title>Advisor Login Portal</title>
 </head>
 
 <body>
-
-<h1>Advisor Registration Form</h1>
-
-<a href="login.php">
-    <button type="button">Login</button>
-</a>
+    
+<?php include '../../header.php' ?>
+<h1>
+    Advisor Login Page
+</h1>
 
 <hr>
-
-<!-- Use the htmlspecial chars to protect from XSS and CSSR -->
-<form action="../utils/forms/registerAdvisor.php" method="post">
-    <ul>
-        <li>
-            <label>
-                First Name: <input type="text" name="fName">
-            </label>
-            <?php
-            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_FNAME"])) {
-                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_FNAME"];
-                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_FNAME"]);
-            }
-            ?>
-        </li>
-
-        <li>
-            <label>
-                Middle Name: <input type="text" name="mName">
-            </label>
-        </li>
-
-        <li>
-            <label>
-                Last Name: <input type="text" name="lName">
-            </label>
-            <?php
-            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_LNAME"])) {
-                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_LNAME"];
-                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_LNAME"]);
-            }
-            ?>
-        </li>
-
-        <li>
-            <label>
-                E-mail: <input type="email" name="email">
-            </label>
-            <?php
-            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_EMAIL"])) {
-                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_EMAIL"];
-                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_EMAIL"]);
-            }
-            ?>
-        </li>
-
-        <li>
-            <label>
-                Office Building Name: <input type="text" name="bldgName">
-            </label>
-            <?php
-            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_BLDGNAME"])) {
-                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_BLDGNAME"];
-                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_BLDGNAME"]);
-            }
-            ?>
-        </li>
-
-        <li>
-            <label>
-                Office Room: <input type="text" name="officeRm">
-            </label>
-            <?php
-            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_OFFICERM"])) {
-                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_OFFICERM"];
-                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_OFFICERM"]);
-            }
-            ?>
-        </li>
-        <input type="submit" name="Register!">
-    </ul>
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <label>
+        <!-- Only email needs an error, the rest is handled by HTML 5 -->
+        E-mail: <input type="text" name="email" required>
+        <br>
+    </label>
+    <label>
+        <input type="submit">
+    </label>
 </form>
 </body>
 </html>
