@@ -1,8 +1,7 @@
 <?php
 session_start();
 include '../utils/dbconfig.php';
-include '../../student/header.php'
-;
+
 // Checks to see if the user is logged in, if so it redirects them to homepage
 if (isset($_SESSION["HAS_LOGGED_IN"])) {
     if ($_SESSION["HAS_LOGGED_IN"]) {
