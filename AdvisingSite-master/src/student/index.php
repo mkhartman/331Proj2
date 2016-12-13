@@ -7,6 +7,7 @@ include('../CommonMethods.php');
  $fileName = "index.php";
 
  $email_error_message = $fName_error_message = $lName_error_message = "";
+echo " ";
  $schoolID_error_message = $major_error_message = "";
  $email = $fName = $lName = $schoolID = $major = "";
 
@@ -21,7 +22,7 @@ if($_POST){
   $major = $_POST["major"]; 
   
   //regex for email validation 
-  $email_validation = '/^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[A-za-z0-9]{3}$/';
+  $email_validation = '^[a-zA-Z]?@umbc.edu$^';
   
   //boolean to determine if email is invalid
   $invalid_email = false;
@@ -44,75 +45,45 @@ if($_POST){
     $email_error_message = "Record exists for ". $email;
   }
   
-  //email validation, may not need nested ifs
   if(!preg_match($email_validation, $email)){
-    
     $invalid_email = true;
-  
-    if(empty($_POST["email"]) || $invalid_email == true){
-      //echo "<br>Please enter email.<br>";
-      $misc_error = true;
-      $email_error_message = "*Please enter a valid e-mail address.*";
-    }
-  
-    if(empty($_POST["fName"])){
-      //echo "<br>Please enter first name.<br>";
-      $misc_error = true;
-      $fName_error_message = "*Please enter your first name.*";
-    }
-    
-    if(empty($_POST["lName"])){
-      //echo "<br>Please enter last name.<br>";
-      $misc_error = true;
-      $lName_error_message = "*Please enter your last name.*";
-    }
-    
-    if(empty($_POST["schoolID"])){
-      //echo "<br>Please enter school id.<br>";
-      $misc_error = true;
-      $schoolID_error_message = "*Please enter your school ID.*";
-    }
-    
-    if(empty($_POST["major"])){
-      //echo "<br>Please enter major.<br>";
-      $misc_error = true;
-      $major_error_message = "*Please enter your major.*";
-    }
+    $misc_error = true;
+    $email_error_message = "Please enter a valid e-mail address";
+  }
+  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["fName"])) {
+    $misc_error = true;
+    $fName_error_message = "*Please enter a valid first name";
+  }
+  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["lName"])) {
+    $misc_error = true;
+    $lName_error_message = "Please enter a valid last name";
+  }
+  if(!preg_match("^[a-zA-Z]{2}[0-9]{5}^", $_POST["schoolID"])){
+    $misc_error = true;
+    $schoolID_error_message = "Please enter a valid student ID";
   }
   
-  //additional field validation
-  if(preg_match($email_validation, $email)){
- 
-    if(empty($_POST["email"])){
-      //echo "<br>Please enter email.<br>";
-      $misc_error = true;
-      $email_error_message = "*Please enter an e-mail address.*";
-    }
-    
-    if(empty($_POST["fName"])){
-      //echo "<br>Please enter first name.<br>";
-      $misc_error = true;
-      $fName_error_message = "*Please enter your first name.*";
-    }
-    
-    if(empty($_POST["lName"])){
-      //echo "<br>Please enter last name.<br>";
-      $misc_error = true;
-      $lName_error_message = "*Please enter your last name.*";
-    }
-    
-    if(empty($_POST["schoolID"])){
-      //echo "<br>Please enter school id.<br>";
-      $misc_error = true;
-      $schoolID_error_message = "*Please enter your school ID.*";
-    }
-    
-    if(empty($_POST["major"])){
-      $misc_error = true;
-      $major_error_message = "*Please enter your major.*";
-    }
+  //checking if empty
+  if(empty($_POST["email"])){
+    $misc_error = true;
+    $email_error_message = "Please enter an e-mail address";
   }
-  
+  if(empty($_POST["fName"])){
+    $misc_error = true;
+    $fName_error_message = "Please enter your first name";
+  }
+  if(empty($_POST["lName"])){
+    $misc_error = true;
+    $lName_error_message = "Please enter your last name";
+  }
+  if(empty($_POST["schoolID"])){
+    $misc_error = true;
+    $schoolID_error_message = "Please enter your school ID";
+  }
+  if(empty($_POST["major"])){
+    $misc_error = true;
+    $major_error_message = "Please enter your major";
+  }
 
   //query activity after determining if no errors have occured
   if($invalid_email == false && $misc_error == false && $student_exists == false){
@@ -129,66 +100,45 @@ if($_POST){
 
 <!DOCTYPE HTML>
 <html>
-<head>
+ <head>
 
-<!-- <style = "text/css">
-  .error {color: #FF0000;}
-	  select{
-	  display: inlinr-block;
-	  float: left;
-	  width: 170px;
-	  }  
-  label{
-display: inline-block;  
-float: left;
-clear: left;
-width: 100px;
-text-align: left;
-}
-  input {
-display: inline-block;
-float: left;
-}
-</style> 
--->
 <title>Student Registration</title>
 
 </head>
 <body>
-<?php include '../header.php' ?>
 
-<div class="sign-up">
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-	  
- <h1>Welcome to the UMBC Science department advising site.</h1>
- <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
+<style>
+.error{color: #FF0000;}
+</style>
 
 <div class="container">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
+	  
+ <h1>Welcome to the CMNS advising site.</h1>
+ <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
+
+<div class="sign-up">
 
     <h2>Sign up.</h2>
-  <label></label><input placeholder="E-mail" type="text" name="email">
   <span class="error"> <?php echo $email_error_message;?></span>
-<br>
+  <label></label><input placeholder="E-mail [Must be an UMBC e-mail]" type="text" name="email" value="<?php if(isset($_POST['email'])) {echo $_POST['email']; }?>" />
 
-  <label></label><input placeholder="First Name" type="text" name="fName">
-  <span class="error"> <?php echo $fName_error_message;?></span>
-<br>
+ <span class="error"> <?php echo "<br>"; echo $fName_error_message;?></span>
+ <label></label><input placeholder="First Name" type="text" name="fName" value="<?php if(isset($_POST['fName'])) {echo $_POST['fName']; }?>" />
 
- <label></label><input placeholder="Middle Name" type="text" name="mName">
-<br>
-<br>
-  <label></label><input placeholder="Last Name" type="text" name="lName">
-  <span class="error"> <?php echo $lName_error_message;?></span>
-<br>
+ <label></label><input placeholder="Middle Name" type="text" name="mName" value="<?php if(isset($_POST['mName'])) {echo $_POST['mName']; }?>" />
 
-  <label></label><input placeholder="Student ID" type="varchar" name="schoolID">
+ <span class="error"> <?php echo "<br>"; echo $lName_error_message;?></span>
+ <label></label><input placeholder="Last Name" type="text" name="lName" value="<?php if(isset($_POST['lName'])) {echo $_POST['lName']; }?>" />
+  
+ <span class="error"> <?php echo "<br>";echo $schoolID_error_message;?></span>
+ <label></label><input placeholder="Student ID" type="varchar" name="schoolID" value="<?php if(isset($_POST['schoolID'])) {echo $_POST['schoolID']; }?>" />
  
- <span class="error"> <?php echo $schoolID_error_message;?></span>
-<br>
 
-  <label></label><!--<input class="input" type="text" name="major">-->
+
+ <label></label>
 	  <select name="major">
-	  <option value="">Please choose a major</option>
+	  <option value="">Select a major</option>
           <option value="BioSciBA">Biological Sciences BA</option>
 	  <option value="BioSciBS">Biological Sciences BS</option>
 	  <option value="BioChem">Biochemistry & Molecular Biology BS</option>
@@ -198,17 +148,14 @@ float: left;
 	  <option value="ChemBS">Chemistry BS</option>
 	  <option value="ChemEd">Chemistry Education BA</option>
 </select>
-  <span class="error"> <?php echo $major_error_message;?></span>
-<br>
-
-<br>
-<input class="submit" type="submit" value="Submit">
+  <span class="error"> <?php $major_error_message;?></span>
+<input class="submit" type="submit" value="Log In">
 <br>
 </form>
 </body>
 
 <h3><a href="login.php"><font size="3"> Have you already registered? Log in here. </font></a></h3>
-  
+
 </div> <!--end of container-->
 
 

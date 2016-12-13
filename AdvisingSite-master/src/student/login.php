@@ -8,7 +8,8 @@
 
 
 <?php
-include '../CommonMethods.php';  
+  include('header.php');
+  include '../CommonMethods.php';  
 
   //declare and define empty login_error
   $login_error = "";
@@ -27,8 +28,14 @@ if ($_POST) {
   
   
   //if email field is left empty or does not exist in table
-  if(empty($email) || mysql_num_rows($results) == 0){
-    $login_error = "Please enter a valid email.";
+  if (empty($email)) {
+    $login_error = "Please enter an email";
+  }
+  else if(!preg_match('^[a-zA-Z]?@umbc.edu$^', $_POST['email'])) {
+    $login_error = "Please enter a valid email";
+  }
+  else if( mysql_num_rows($results) == 0 ){
+    $login_error = "Your email isn't registered";
   }
   else{
     // Search is advisor email exists in student
@@ -47,35 +54,33 @@ if ($_POST) {
       $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];
       $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];
       $_SESSION["MAJOR"] = $studentDict["major"];
-      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];
-      $_SESSION["LAST_NAME"] = $studentDict["lastName"];
-
-
+      
       //redirectedd to index.php
       header('Location: homePage.php');
-      
-      // Can only do function overloading in classes, why need to pass empty string
     }
   }
 }
 ?>
 
-<h1>
-    Student Login Page
-</h1>
+<div class="container">
+<h1>Welcome to the CMNS advising site</h1>
+ <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
-<?php '../header.php' ?>
+ <div class ="login">
+<h1>Student Sign In </h1>
+   
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-  <label>E-mail</label><input type="text" name="email">
-  <span class="error"> <?php echo $login_error;?></span>
+  <label></label><input type="text" placeholder="E-mail" name="email"  value="<?php if(isset($_POST['email'])) {echo $_POST['email']; }?>">
+   <span class="error"> <?php echo "<br>"; echo $login_error;?></span>
+  
   <br>
-  <br>
-  <label><input type="submit"></label>
-
+  <label><input class="submit" type="submit" value="Log In"></label>
 </form>
+<br>
+<h3><a href="index.php"><font size="3">Don't have an account? Register here.</a></h3>
 
-<h3><a href="index.php">Don't have an account? Register here.</a></h3>
-
+</div>
+</div>
 
 

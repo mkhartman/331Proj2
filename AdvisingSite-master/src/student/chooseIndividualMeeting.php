@@ -46,7 +46,6 @@ VALUES(" . $_SESSION["STUDENT_ID"] . ",$theMeetingID)";
 <h1>Choose an Individual Appointment:</h1>
 <br>
 <body>
-<?php include '../header.php' ?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <?php
   //makes all the availible meetings into radio buttons

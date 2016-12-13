@@ -4,7 +4,7 @@ session_start();
 $allRows = "";
 
 if (!isset($_SESSION["HAS_LOGGED_IN"])) {
-    header('Location: index.php');
+    header('Location: login.php');
 }
 
 
@@ -95,7 +95,6 @@ function findStudentsInMeeting($meetingID)
     <title>Advisor Homepage</title>
 </head>
 <body>
-<?php include '../../header.php' ?>
 <h1>
     Adviser Home
 </h1>
@@ -107,10 +106,6 @@ function findStudentsInMeeting($meetingID)
 
     <a href="logout.php">
         <button type="button">Log Out</button>
-    </a>
-
-    <a href="register.php">
-	<button type="button">Create New Advisor</button>
     </a>
 
     <hr>

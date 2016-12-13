@@ -53,7 +53,6 @@ if ($_POST) {
     <title>Advisor Login Portal</title>
 </head>
 <body>
-<?php include '../../header.php' ?>
 
 <h1>
     Advisor Login Page
