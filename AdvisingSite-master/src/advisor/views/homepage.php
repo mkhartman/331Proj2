@@ -206,7 +206,7 @@ function findStudentsInMeeting($meetingID)
                 ?>
             </li>
 
-<li>
+			<li>
                 <label>
                     Meeting End Date
                     <input type="datetime-local" name="meetingEndTime">
