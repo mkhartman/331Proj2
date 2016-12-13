@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 
 // Checks to see if the user is logged in, if so it redirects them to homepage
 if (isset($_SESSION["HAS_LOGGED_IN"])) {
