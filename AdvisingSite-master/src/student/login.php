@@ -17,8 +17,7 @@
   
 
   
-if ($_POST) {
-  $email = strtolower($_POST["email"]);
+if ($_POST) {  $email = strtolower($_POST["email"]);
   $debug = true;
   $COMMON = new Common($debug);
   $fileName = "login.php";
@@ -54,6 +53,8 @@ if ($_POST) {
       $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];
       $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];
       $_SESSION["MAJOR"] = $studentDict["major"];
+      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];
+      $_SESSION["LAST_NAME"] = $studentDict["lastName"];
       
       //redirectedd to index.php
       header('Location: homePage.php');
@@ -61,7 +62,7 @@ if ($_POST) {
   }
 }
 ?>
-
+  
 <div class="container">
 <h1>Welcome to the CMNS advising site</h1>
  <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
