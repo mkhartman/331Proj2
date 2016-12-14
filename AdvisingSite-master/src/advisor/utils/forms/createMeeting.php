@@ -13,6 +13,7 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
     $rNumber = $_POST["roomNumber"];
     $typeOfMeeting = $_POST["meetingType"];
     $isGroup = false;
+	$advisorID = $_POST["advisor"];
 
     if ($typeOfMeeting == "group") {
         $isGroup = true;
@@ -36,8 +37,6 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
     }
 
     if ($numOfErrors == 0) {
-        // Use assigned variable stored in session
-        $advisorID = $_SESSION["ADVISOR_ID"];
 
         $startDate = new DateTime($start);
 

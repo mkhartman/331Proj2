@@ -50,6 +50,30 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
         array_push($allRows, $row);
     }
 
+	
+	// Get all of the advisors in an array
+
+    $open_connection = connectToDB();
+
+    $searchAdvisors = "
+      SELECT 
+        Advisor.firstName;
+		Advisor.lastName;
+		Advisor.advisorID;
+      From 
+        Advisor
+    ";
+
+    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
+
+
+//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
+
+    $advisorNames = array();
+    while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
+        array_push($advisorNames, $advisorRow);
+    }
+	
 
     $open_connection->close();
 }
@@ -109,7 +133,7 @@ function findStudentsInMeeting($meetingID)
     <a href="logout.php">
         <button type="button">Log Out</button>
     </a>
- <a href="register.php">
+	<a href="register.php">
 	<button type="button">Create New Advisor</button>
     </a>
     <hr>
@@ -209,7 +233,7 @@ function findStudentsInMeeting($meetingID)
                 ?>
             </li>
 
-<li>
+			<li>
                 <label>
                     Meeting End Date
                     <input type="datetime-local" name="meetingEndTime">
@@ -256,6 +280,17 @@ function findStudentsInMeeting($meetingID)
                     </select>
                 </label>
             </li>
+			
+			<li> 
+				<label>
+					Meeting Advisor:
+					<select name="advisor">
+					<?php foreach ($advisorRows as $aRow) { ?>
+						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
+					<?php } ?>
+				</label>
+			</li>
+			
             <label>
                 <input type="submit">
             </label>
@@ -263,7 +298,15 @@ function findStudentsInMeeting($meetingID)
 
     </form>
 
-	    <form action="../utils/forms/createMeeting.php" method="POST">
+	<form action="multipleMeetings.php" method="POST">
+		<label>
+			<input type="submit">
+		</label>
+	</form>
+	
+<?php } ?>
+
+    <form action="../utils/forms/createMultipleMeeting.php" method="POST">
         <h4>
             Create Multiple Meetings
         </h4>
@@ -281,7 +324,7 @@ function findStudentsInMeeting($meetingID)
                 ?>
             </li>
 
-<li>
+			<li>
                 <label>
                     Meeting End Date
                     <input type="datetime-local" name="meetingEndTime">
@@ -328,14 +371,21 @@ function findStudentsInMeeting($meetingID)
                     </select>
                 </label>
             </li>
+			
+			<li> 
+				<label>
+					Meeting Advisor:
+					<select name="advisor">
+					<?php foreach ($advisorRows as $aRow) { ?>
+						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
+					<?php } ?>
+			
             <label>
                 <input type="submit">
             </label>
         </ul>
 
     </form>
-	
-<?php } ?>
 
 </body>
 </html>
