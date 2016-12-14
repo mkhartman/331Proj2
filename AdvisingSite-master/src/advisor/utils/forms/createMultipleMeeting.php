@@ -1,8 +1,4 @@
 
-needs to be changed before being used
-currently just a copy of createMeeting.php
-
-
 <?php
 
 session_start();
@@ -12,18 +8,23 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
     include '../dbconfig.php';
 
     // Parse through variables from form
-    $start = $_POST["meetingStartTime"];
-    $end = $_POST["meetingEndTime"];
-    $bName = $_POST["buildingName"];
-    $rNumber = $_POST["roomNumber"];
-    $typeOfMeeting = $_POST["meetingType"];
-    $isGroup = false;
-	$advisorID = $_POST["advisor"];
-
-    if ($typeOfMeeting == "group") {
-        $isGroup = true;
-    }
-
+	$startDate = $_POST["meetingStartDate"]; //date
+	$repeatDays = $_POST["meetingRepeatDays"]; //number
+	$repeatD = $_POST["meetingRepeatD"]; //date
+	$start = $_POST["meetingStartTime"]; //time
+	$length = $_POST["meetingLength"]; //number
+	$repeatTime = $_POST["meetingRepeatTime"]; //number
+	$repeat = $_POST["meetingRepeat"]; //time
+	$buildingName = $_POST["buildingName"]; //text
+	$roomNumber = $_POST["roomNumber"]; //text
+	$meetingType = $_POST["meetingType"]; //select "group" or "individual"
+	$isGroup = false;
+	if($meetingType == "group") {
+		$isGroup = true;
+	}
+	$advisorID = $_POST["advisor"]; //select based on advisorID
+		
+	
     $numOfErrors = 0;
 
     if ($start == "") {
@@ -41,6 +42,10 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
         $_SESSION["ERROR_ADVISOR_MEETING_ROOM"] = "Error: You must enter in a room number.";
     }
 
+	
+	NEEDS WORK FROM HERE DOWN
+	
+	
     if ($numOfErrors == 0) {
 
         $startDate = new DateTime($start);

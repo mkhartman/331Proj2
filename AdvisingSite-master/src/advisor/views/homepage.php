@@ -311,10 +311,31 @@ function findStudentsInMeeting($meetingID)
             Create Multiple Meetings
         </h4>
         <ul>
+			
+			<li> 
+				<label>
+					Meeting Start Date
+					<input type="date" name="meetingStartDate">
+				<?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
+                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
+                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
+                }
+                ?>
+				</label>
+			</li>
+			
+			<li>
+				<label>
+					Repeat every <input type="number" name="meetingRepeatDays"> days until <input type="date" name="meetingRepeatD">
+				</label>
+			</li>
+				
+		
             <li>
                 <label>
-                    Meeting Start Date
-                    <input type="datetime-local" name="meetingStartTime">
+                    Meeting Start Time
+                    <input type="time" name="meetingStartTime">
                 </label>
                 <?php
                 if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
@@ -326,16 +347,14 @@ function findStudentsInMeeting($meetingID)
 
 			<li>
                 <label>
-                    Meeting End Date
-                    <input type="datetime-local" name="meetingEndTime">
+                    Meeting Length (Minutes)
+                    <input type="number" name="meetingLength">
                 </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-		  echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-		  unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
+				<label>
+					Repeat every <input type="number" name="meetingRepeatTime"> minutes until <input type="time" name="meetingRepeat">
+				</label>
             </li>
+			
             <li>
                 <label>
                     Building Name
@@ -347,7 +366,7 @@ function findStudentsInMeeting($meetingID)
                     unset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"]);
                 }
                 ?>
-            </li>
+			</li>
 
             <li>
                 <label>
@@ -360,7 +379,7 @@ function findStudentsInMeeting($meetingID)
                     unset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"]);
                 }
                 ?>
-            </li>
+			</li>
 
             <li>
                 <label>
@@ -379,6 +398,8 @@ function findStudentsInMeeting($meetingID)
 					<?php foreach ($advisorRows as $aRow) { ?>
 						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
 					<?php } ?>
+				</label>
+			</li>
 			
             <label>
                 <input type="submit">
