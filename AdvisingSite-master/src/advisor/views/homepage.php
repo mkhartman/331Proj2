@@ -135,7 +135,11 @@ function findStudentsInMeeting($meetingID)
     </a>
 	<a href="register.php">
 	<button type="button">Create New Advisor</button>
+    </a>   
+        <a href="security.php">
+        <button type="button">Set Security Questions</button>
     </a>
+
     <hr>
 
     <?php foreach ($allRows as $aRow) { ?>
