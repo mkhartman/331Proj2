@@ -3,6 +3,26 @@ html {
     background-repeat: no-repeat;
 }
 
+.leftPanel{
+  background-color: #ECECEC;
+  position: relative;
+left: 25%;
+top: 35%;
+width: 350px;
+height: 300px;
+
+ }
+
+.rightPanel{
+  background-color: #ECECEC;
+  position: relative;
+left: 150%;
+bottom: 60%;
+width: 350px;
+height: 300px;
+
+ }
+
 header {
     position: relative;
     background: black;
