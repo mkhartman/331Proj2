@@ -83,9 +83,6 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     
     
     echo("Your current meeting:");
-    
-    
-    
     echo("<table>");
     
     
@@ -175,14 +172,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 </body>
 </html>
 
-<html>
-<!-- the button that student click if they want to edit their info -->
-<form action="changeInfo.php" method="post" name="EditInfo">
-<button name="EditInfo" type="submit" >Edit my Info</button>
-</form>
-
 <br>
-<a href="viewMeeting.php">View Scheduled Appointment</a>
+<br>
+<br>
+<a href="changeInfo.php">Edit My Info</a>
 <br>
 <br>
 <br>

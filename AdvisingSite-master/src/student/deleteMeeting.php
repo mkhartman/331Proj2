@@ -19,7 +19,7 @@ $fileName = "deleteMeeting.php";
   $theMeeting = mysql_fetch_assoc($rs);
  
 
-  $meetingID = $_SESSION['MEETING_ID'];
+  $meetingID = $_SESSION['CURRENT_MEETING_ID'];
 
   // actually updates the table 
   $subtractOne = "UPDATE Meeting SET numStudents = numStudents-1 WHERE meetingID =$meetingID";
