@@ -139,14 +139,14 @@ if($_POST){
  <label></label>
 	  <select name="major">
 	  <option value="">Select a major</option>
-          <option value="BioSciBA">Biological Sciences BA</option>
-	  <option value="BioSciBS">Biological Sciences BS</option>
-	  <option value="BioChem">Biochemistry & Molecular Biology BS</option>
-	  <option value="BioInfo">Bioinformatics & Computational Biology BS</option>
-	  <option value="BioEd">Biology Education BA</option>
-	  <option value="ChemBA">Chemistry BA</option>
-	  <option value="ChemBS">Chemistry BS</option>
-	  <option value="ChemEd">Chemistry Education BA</option>
+          <option value="Biological Sciences BA">Biological Sciences BA</option>
+	  <option value="Biological Sciences BS">Biological Sciences BS</option>
+	  <option value="Biochemistry & Molecular Biology BS">Biochemistry & Molecular Biology BS</option>
+	  <option value="Bioinformatics & Computational Biology BS">Bioinformatics & Computational Biology BS</option>
+	  <option value="Biology Education BA">Biology Education BA</option>
+	  <option value="Chemistry BA">Chemistry BA</option>
+	  <option value="Chemistry BS">Chemistry BS</option>
+	  <option value="Chemistry Education BA">Chemistry Education BA</option>
 </select>
   <span class="error"> <?php $major_error_message;?></span>
 <input class="submit" type="submit" value="Log In">

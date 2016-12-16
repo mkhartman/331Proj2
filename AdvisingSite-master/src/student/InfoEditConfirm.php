@@ -1,5 +1,7 @@
 <?php
 include '../CommonMethods.php';
+session_start();
+
 // this file will access the database and change all the data for the specific Student ID
 
 // please see 00ProjectGuide.txt for notes about $_SESSION
