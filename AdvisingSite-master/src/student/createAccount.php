@@ -51,17 +51,17 @@ if($_POST){
     $misc_error = true;
     $email_error_message = "Please enter a valid e-mail address";
   }
-  /*
-  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["fName"])) {
+	
+  if(!preg_match("^[a-zA-Z]?^",$_POST["fName"])) {
     $misc_error = true;
     $fName_error_message = "Please enter a valid first name";
   }
   
-  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["lName"])) {
+  if(!preg_match("^[a-zA-Z]?^",$_POST["lName"])) {
     $misc_error = true;
     $lName_error_message = "Please enter a valid last name";
   }
-  */
+	
   if(!preg_match("^[a-zA-Z]{2}[0-9]{5}^", $_POST["schoolID"])){
     $misc_error = true;
     $schoolID_error_message = "Please enter a valid student ID";
