@@ -44,10 +44,11 @@ VALUES(" . $_SESSION["STUDENT_ID"] . ",$theMeetingID)";
 
 <html>
 <head></head>
+<div class="container">
 <h1>Choose an Appointment:</h1>
 <br>
 <body>
-<?php include '../header.php' ?>
+<?php include 'header.php' ?>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
     <?php
   //makes all the availible meetings into radio buttons
@@ -56,7 +57,20 @@ VALUES(" . $_SESSION["STUDENT_ID"] . ",$theMeetingID)";
   }
   else{
     while ($aRow = mysql_fetch_assoc($rs)) {
+      $meetingID= $aRow["meetingID"];
+      $findInAdvisorMeeting = "SELECT * FROM `AdvisorMeeting` WHERE `meetingID`=$meetingID";
+      $result=$COMMON->executequery($findInAdvisorMeeting,$fileName);
+      $row = mysql_fetch_assoc($result);
+      $advisorNum = $row["advisorID"];
+      //finds the advisor
+      $findAdvisor= "SELECT * FROM `Advisor` WHERE advisorID=$advisorNum";
+      $result2=$COMMON->executequery($findAdvisor,$fileName);
+      $row2 = mysql_fetch_assoc($result2);
+      $closedSeason = $row2["closed"];
+      //if the advisors season is closed don't display the meeting.
+      if ($closedSeason == 0) {
       echo "<input type = 'radio' name='meeting' value='" . $aRow["meetingID"] . "'>";
+
         ?>
         <h4>Meeting</h4>
 
@@ -76,11 +90,14 @@ VALUES(" . $_SESSION["STUDENT_ID"] . ",$theMeetingID)";
         </ul>
         <?php
 	   }
+    }
     ?>
-      <input type="submit">
+      <input class="submit" type="submit" value="Submit">
 
 </form>
        <?php } ?>
 <a href="homePage.php">Return Home</a>
+<div>
+<br><br>
 </body>
 </html>
