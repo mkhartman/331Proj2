@@ -25,15 +25,16 @@ $create_meeting = "INSERT INTO StudentMeeting(StudentID,MeetingID)
 VALUES(" . $_SESSION["STUDENT_ID"] . ",$id)";
 $rs=$COMMON->executequery($create_meeting, $_SERVER["SCRIPT_NAME"]);
   
-  
-/*
-$sql = "update `StudentInfo` set `Meeting` ='" . $id . "' where `StudentID` = '" . $_SESSION["StuID"]. "'";
-$rs = $COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
-*/
 
 echo "Your appointment has been added!<br>";
-
+echo "Would you like to leave a Comment to your Advisor?\n" 
 ?>
+<br>
+<form action="addComment.php" method="post" name="addComment">
+<textarea name="comment" rows="5" cols="40">Enter your comments here</textarea>
+<br>
+<button name="Confirm" type="submit">Add Comment</button>
+</form>
 
 <form action="homePage.php">
    <input type="submit" value = "Go Home">

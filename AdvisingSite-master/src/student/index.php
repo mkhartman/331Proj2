@@ -1,164 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+.error{color: #FF0000;}
+</style>
+</head>
+
+
 <?php
+  include('header.php');
+  include '../CommonMethods.php';  
 
-include('header.php');
-include('../CommonMethods.php');
- $debug = true;
- $COMMON = new Common($debug);
- $fileName = "index.php";
+  //declare and define empty login_error
+  $login_error = "";
+  
+  
 
- $email_error_message = $fName_error_message = $lName_error_message = "";
-echo " ";
- $schoolID_error_message = $major_error_message = "";
- $email = $fName = $lName = $schoolID = $major = "";
-
-if($_POST){
- 
-  //defining variables used for query
-  $email = $_POST["email"];
-  $fName = $_POST["fName"];
-  $mName = $_POST["mName"];
-  $lName = $_POST["lName"];
-  $schoolID = $_POST["schoolID"];
-  $major = $_POST["major"]; 
   
-  //regex for email validation 
-  $email_validation = '^[a-zA-Z]?@umbc.edu$^';
+if ($_POST) {  $email = strtolower($_POST["email"]);
+  $debug = true;
+  $COMMON = new Common($debug);
+  $fileName = "login.php";
   
-  //boolean to determine if email is invalid
-  $invalid_email = false;
+  $login_val_query = "SELECT * FROM Student WHERE email = '$email'";
+  $results = $COMMON->executequery($login_val_query, $fileName);
   
-  //boolean to determine if miscellanious error has occured
-  $misc_error = false;
   
-  //boolean to determine if student record exists in db
-  $student_exists = false;
-  
-  //query for student validation
-  $student_val_query = "SELECT * FROM Student WHERE email = '$email'";
-  
-  //query execution
-  $validation_query = $COMMON->executequery($student_val_query, $fileName);
-
-  //determines if atleast one record exists with entered email
-  if(mysql_num_rows($validation_query) > 0){
-    $student_exists = true;
-    $email_error_message = "Record exists for ". $email;
+  //if email field is left empty or does not exist in table
+  if (empty($email)) {
+    $login_error = "Please enter an email";
   }
-  
-  if(!preg_match($email_validation, $email)){
-    $invalid_email = true;
-    $misc_error = true;
-    $email_error_message = "Please enter a valid e-mail address";
+  else if(!preg_match('^[a-zA-Z]?@umbc.edu$^', $_POST['email'])) {
+    $login_error = "Please enter a valid email";
   }
-  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["fName"])) {
-    $misc_error = true;
-    $fName_error_message = "*Please enter a valid first name";
+  else if( mysql_num_rows($results) == 0 ){
+    $login_error = "Your email isn't registered";
   }
-  if(!preg_match("^[a-zA-Z]+[-']?[a-zA-Z]+&^",$_POST["lName"])) {
-    $misc_error = true;
-    $lName_error_message = "Please enter a valid last name";
-  }
-  if(!preg_match("^[a-zA-Z]{2}[0-9]{5}^", $_POST["schoolID"])){
-    $misc_error = true;
-    $schoolID_error_message = "Please enter a valid student ID";
-  }
-  
-  //checking if empty
-  if(empty($_POST["email"])){
-    $misc_error = true;
-    $email_error_message = "Please enter an e-mail address";
-  }
-  if(empty($_POST["fName"])){
-    $misc_error = true;
-    $fName_error_message = "Please enter your first name";
-  }
-  if(empty($_POST["lName"])){
-    $misc_error = true;
-    $lName_error_message = "Please enter your last name";
-  }
-  if(empty($_POST["schoolID"])){
-    $misc_error = true;
-    $schoolID_error_message = "Please enter your school ID";
-  }
-  if(empty($_POST["major"])){
-    $misc_error = true;
-    $major_error_message = "Please enter your major";
-  }
-
-  //query activity after determining if no errors have occured
-  if($invalid_email == false && $misc_error == false && $student_exists == false){
-        
-    $sql = "INSERT INTO Student (email,firstName,middleName,lastName,schoolID,major) VALUES ('$email','$fName','$mName','$lName', '$schoolID','$major')";
+  else{
+    // Search is advisor email exists in student
+    // Run raw sql query in attempt to create a new advisor
+    $search_student = "SELECT * FROM Student WHERE email='$email'";
+    $rs = $COMMON->executequery($search_student, $fileName);
+    // Check whether or not there has been a successful adviser creation
+    $num_rows = mysql_num_rows($rs);
     
-    //executes query and redirects to login
-    if($rs = $COMMON->executeQuery($sql,$fileName)){
-      header('Location: login.php');
+    if ($num_rows == 1) {
+      session_start();
+      
+      $studentDict = mysql_fetch_assoc($rs);
+      
+      $_SESSION["HAS_LOGGED_IN"] = true;
+      $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];
+      $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];
+      $_SESSION["MAJOR"] = $studentDict["major"];
+      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];
+      $_SESSION["LAST_NAME"] = $studentDict["lastName"];
+      $_SESSION["SCHOOL_ID"] = $studentDict["schoolID"];
+      $_SESSION["CAREER"] = $studentDict["career"];  
+      if ($studentDict["middleName"] == NULL)
+	$_SESSION["NICK_NAME"] = "N/A";
+      else
+	$_SESSION["NICK_NAME"] = $studentDict["middleName"];
+
+      if ($studentDict["comment"] == NULL)
+	$_SESSION["COMMENT"] = "No Comment Given";
+      else
+	$_SESSION["COMMENT"] = $studentDict["comment"];
+
+      //redirectedd to index.php
+      header('Location: homePage.php');
     }
   }
 }
 ?>
-
-<!DOCTYPE HTML>
-<html>
- <head>
-
-<title>Student Registration</title>
-
-</head>
-<body>
-
-<style>
-.error{color: #FF0000;}
-</style>
-
+  
 <div class="container">
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
-	  
- <h1>Welcome to the CMNS advising site.</h1>
+<h1>Welcome to the CMNS advising site</h1>
  <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
-<div class="sign-up">
+ <div class ="login">
+<h1>Student Sign In </h1>
+   
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
 
-    <h2>Sign up.</h2>
-  <span class="error"> <?php echo $email_error_message;?></span>
-  <label></label><input placeholder="E-mail [Must be an UMBC e-mail]" type="text" name="email" value="<?php if(isset($_POST['email'])) {echo $_POST['email']; }?>" />
-
- <span class="error"> <?php echo "<br>"; echo $fName_error_message;?></span>
- <label></label><input placeholder="First Name" type="text" name="fName" value="<?php if(isset($_POST['fName'])) {echo $_POST['fName']; }?>" />
-
- <label></label><input placeholder="Middle Name" type="text" name="mName" value="<?php if(isset($_POST['mName'])) {echo $_POST['mName']; }?>" />
-
- <span class="error"> <?php echo "<br>"; echo $lName_error_message;?></span>
- <label></label><input placeholder="Last Name" type="text" name="lName" value="<?php if(isset($_POST['lName'])) {echo $_POST['lName']; }?>" />
+  <label></label><input type="text" placeholder="E-mail" name="email"  value="<?php if(isset($_POST['email'])) {echo $_POST['email']; }?>">
+   <span class="error"> <?php echo "<br>"; echo $login_error;?></span>
   
- <span class="error"> <?php echo "<br>";echo $schoolID_error_message;?></span>
- <label></label><input placeholder="Student ID" type="varchar" name="schoolID" value="<?php if(isset($_POST['schoolID'])) {echo $_POST['schoolID']; }?>" />
- 
-
-
- <label></label>
-	  <select name="major">
-	  <option value="">Select a major</option>
-          <option value="Biological Sciences BA">Biological Sciences BA</option>
-	  <option value="Biological Sciences BS">Biological Sciences BS</option>
-	  <option value="Biochemistry & Molecular Biology BS">Biochemistry & Molecular Biology BS</option>
-	  <option value="Bioinformatics & Computational Biology BS">Bioinformatics & Computational Biology BS</option>
-	  <option value="Biology Education BA">Biology Education BA</option>
-	  <option value="Chemistry BA">Chemistry BA</option>
-	  <option value="Chemistry BS">Chemistry BS</option>
-	  <option value="Chemistry Education BA">Chemistry Education BA</option>
-</select>
-  <span class="error"> <?php $major_error_message;?></span>
-<input class="submit" type="submit" value="Log In">
-<br>
+  <br>
+  <label><input class="submit" type="submit" value="Log In"></label>
 </form>
-</body>
+<br>
+<h3><a href="createAccount.php"><font size="3">Don't have an account? Register here.</a></h3>
 
-<h3><a href="login.php"><font size="3"> Have you already registered? Log in here. </font></a></h3>
+</div>
+</div>
 
-</div> <!--end of container-->
 
-
-</div> <!--end of sign-up-->
-
-</html>
