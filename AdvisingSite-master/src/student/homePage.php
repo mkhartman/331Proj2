@@ -161,6 +161,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
       echo("<td>Group</td>");
     
     echo("</tr>");
+
+    echo("<tr>");
+    echo("<td>Comment for Meeting</td>");
+    echo("<td>" . $_SESSION["COMMENT"] . "</td>");
     echo("</table>");
     
   }
