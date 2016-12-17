@@ -89,4 +89,4 @@ else {
   header('Location:closed.php');
 }    
 ?>
-<a href="homePage.hp">Back to homepage</a>
+<a href="homePage.php">Back to homepage</a>
