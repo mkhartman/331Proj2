@@ -1,6 +1,8 @@
 html { 
     background-image: url("http://undergraduate.umbc.edu/img/visit-image-cropped.jpg");
     background-repeat: no-repeat;
+    background-attachment: fixed;
+
 }
 
 header {
@@ -56,6 +58,16 @@ header {
     border-left-style: outset;
     border-left-color: #000000;
 }
+.editInfo {
+    font-family: Georgia;
+    text-align: left;
+    padding-left: 2%;
+    padding-bottom: .5%;
+    position: relative;
+    margin-left: 2%; 
+    background-color: white;
+
+}
 
 input {
     position: relative;
@@ -87,7 +99,7 @@ select:hover {
 }
 
 .submit {
-    font-family: Georgia;
+    font-family: Arial;
     border-radius: 4px;
     font-size: 16px;
     padding: 5px;
@@ -97,11 +109,22 @@ select:hover {
     width: 50%;
 }    
 
+.submitSmall {
+    font-family: Arial;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 5px;
+    margin-top: 15px;
+    color: black;
+    background-color: #F5CA5C;
+    width: 25%;
+}
+
 
 a:link, a:visited {
     background-color: #F5CA5C;
     color: black;
-    padding: 1.5%;
+    padding: 1%;
     text-align: center;
     text-decoration: none;
     border-radius: 4px;
