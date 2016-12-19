@@ -28,10 +28,7 @@ where `email` = '" . $_SESSION["STUDENT_EMAIL"]. "'";
 $filename = "InfoEditConfirm.php";
 $rs = $COMMON->executeQuery($sql, $filename);
 
-echo "Your information have been changed!";
+header('Location:homePage.php');
 
-echo '<form action="homePage.php">';
-echo '<input type="submit" value ="Home">';
-echo '</form>';
 ?>
 
