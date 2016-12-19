@@ -1,7 +1,5 @@
 <?php
 include'../../CommonMethods.php';
-$bestFri_error = $highSch_error = $petName_error = "";
-
 $bestFri_error_message = $highSch_error_message = $petName_error_message = "";
 
 
@@ -85,7 +83,7 @@ if ($_POST) {
 
   <input type="submit">
 
-  <a href="index.php">
+  <a href="forgotPassEmail.php">
   <button type="button">Back</button>
   </a>
 

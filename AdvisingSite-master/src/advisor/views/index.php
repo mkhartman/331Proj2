@@ -70,7 +70,7 @@ if ($_POST) {
         <input type="submit">
     </label>
 
-  <a href="forgotPass.php">
+  <a href="forgotPassEmail.php">
   <button type="button">Forgot Password?</button>
   </a>
 
