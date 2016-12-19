@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+// student home page
+// check if the student has logged in
 if($_SESSION["HAS_LOGGED_IN"]){
   include '../CommonMethods.php';
   include 'header.php';
@@ -77,11 +78,12 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     
     $meetingDict = mysql_fetch_assoc($rs);
     
-    $_SESSION["CURRENT_MEETING_ID"] = $meetingDict["meetingID"];
-    $_SESSION["CURRENT_START_TIME"] = $meetingDict["start"];
-    $_SESSION["CURRENT_END_TIME"] = $meetingDict["end"];
-    $_SESSION["CURRENT_APPT_BUILDING"] = $meetingDict["buildingName"];
-    $_SESSION["CURRENT_APPT_ROOM"] = $meetingDict["roomNumber"];
+    // $_SESSION variable names are pretty self explanatory
+    $_SESSION["CURRENT_MEETING_ID"] = $meetingDict["meetingID"];        // the meeting id correlating to the database
+    $_SESSION["CURRENT_START_TIME"] = $meetingDict["start"];            // the start time for the meeting
+    $_SESSION["CURRENT_END_TIME"] = $meetingDict["end"];                // the end time for the meeting
+    $_SESSION["CURRENT_APPT_BUILDING"] = $meetingDict["buildingName"];  // the building of the meeting
+    $_SESSION["CURRENT_APPT_ROOM"] = $meetingDict["roomNumber"];        // the roomt number of the meeting
     
     
     echo("Your current meeting:");
@@ -201,8 +203,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 <p id="demo"></p>
 
 <?php
+  // creating the pop up window confirming if student want to delete their meeting
 echo '<script language="javascript">';
 ?>
+
 
 function myFunction() {
  
