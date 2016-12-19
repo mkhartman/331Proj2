@@ -4,26 +4,17 @@ session_start();
 
 $debug = true;
 $COMMON = new Common($debug);
-$fileName = "security.php";
+$fileName = "editSecurity.php";
 
 $bestFri = $highSch = $firstPet = "";
 
 $bestFri_error_message = $highSch_error_message = $firstPet_error_message = "";
 
 $checkForAdvisor = "Select * FROM Advisor Where Advisor.advisorID=".$_SESSION['ADVISOR_ID'];
+
 $rs = $COMMON->executequery($checkForAdvisor,$fileName);
 $numRows = mysql_fetch_array($rs);
 $advisorID = $numRows["advisorID"];
-
-$checkForSecurity = "Select * FROM SecurityQuestion Where SecurityQuestion.advisorID=".$_SESSION['ADVISOR_ID'];
-$ex = $COMMON->executequery($checkForSecurity,$fileName);
-$rowsSecurityQuestion = mysql_fetch_array($ex);
-$countRow = count($rowsSecurityQuestion);
-
-
-if ($countRow > 1){
-  header('Location: editSecurity.php');
-}
 
 
 if($_POST) {
@@ -51,13 +42,16 @@ if($_POST) {
   }
 
   if($misc_error == false) {
-
-    $sql = "INSERT INTO SecurityQuestion (advisorID,bestFriend,highSchool,petName) VALUES ('$advisorID','$bestFri','$highSch','$firstPet')";
-
+    $sql = "UPDATE `SecurityQuestion` SET `bestFriend` ='$bestFri', `highSchool`='$highSch', `petName` ='$firstPet' WHERE `advisorID` ='$advisorID'";
+  
     $rs = $COMMON->executeQuery($sql,$fileName);
     header('Location:homepage.php');
   }
 }
+
+
+
+
 ?>
 
 <html>
@@ -68,7 +62,7 @@ if($_POST) {
 <body>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
-  <h1>Set Security Questions</h1>
+  <h1>Edit Your Security Questions</h1>
 
        <br>
 
@@ -80,7 +74,7 @@ if($_POST) {
   <br>
 
   <br>
-  <label>What is the name of your high school </label><input type="text" name="highSch">
+  <label>What is the name of your high school</label><input type="text" name="highSch">
 
   <span class="error"> <?php echo $highSch_error_message;?></span>
 
@@ -93,6 +87,7 @@ if($_POST) {
   <br>
 
   <input type="submit">
+
 <a href="homepage.php">
   <button type="button">Back</button>
   </a>

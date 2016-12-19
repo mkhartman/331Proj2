@@ -1,9 +1,46 @@
 <?php
+session_start();
 include'../../CommonMethods.php';
-$bestFri_error_message = $highSch_error_message = $petName_error_message = "";
+$email_error_message = $login_error = $bestFri_error_message = $highSch_error_message = $petName_error_message = "";
 
 
-if ($_POST) {
+
+if(isset ($_POST["email"])){
+
+  $advisorEmail = $_POST["email"];
+  //  echo $advisorEmail;
+
+  if ($_POST) {
+    $email = strtolower($_POST["email"]);
+
+    $debug = true;
+    $COMMON = new Common($debug);
+    $fileName = "forgotPassEmail.php";
+
+    $search_email = "SELECT * FROM Advisor WHERE email = '$email'";
+    $result_email = $COMMON->executequery($search_email, $fileName);
+
+
+    //if email field is left empty or does not exist in table                                                                                 
+    if(empty($_POST["email"]) || mysql_num_rows($result_email) == 0){
+      $_SESSION["emailErrorMessage"] = "*Please enter a valid email*";
+      //$email_error_message = "*Please enter a valid email*";
+      header('Location: forgotPassEmail.php');
+    }
+
+    else{
+      $row = mysql_fetch_array($result_email);
+      $advisorID = $row["advisorID"];
+      
+    }
+  }
+
+
+
+}
+
+if(isset ($_POST["bestFri"])) {
+    
   $bestFri = $_POST["bestFri"];
   $highSch = $_POST["highSch"];
   $petName = $_POST["petName"];
@@ -11,38 +48,59 @@ if ($_POST) {
   $debug = true;
   $COMMON = new Common($debug);
   $fileName = "forgotPass.php";
+
+  
+  $row = "Select * FROM Advisor Where Advisor.email= '$advisorEmail'";
+  $rs = $COMMON->executequery($row,$fileName);
+  $numRows = mysql_fetch_array($rs);
+  $advisorID = $numRows['advisorID'];
   
   
+  $question = "Select * FROM SecurityQuestion Where SecurityQuestion.advisorID = $advisorID";
+  $ex = $COMMON->executequery($question,$fileName);
+  $securityRow = mysql_fetch_array($ex);
+
+
   
-  $search_bestFri = "SELECT * FROM SecurityQuestion WHERE bestFriend='$bestFri'";
-  $search_highSch = "SELECT * FROM SecurityQuestion WHERE highSchool='$highSch'";
-  $search_petName = "SELECT * FROM SecurityQuestion WHERE petName='$petName'";
-  
-    $result_bestFri = $COMMON->executequery($search_bestFri, $fileName);
-    $result_highSch = $COMMON->executequery($search_highSch, $fileName);
-    $result_petName = $COMMON->executequery($search_petName, $fileName);
     $numOfErrors = 0;
 
-    if(empty($_POST["bestFri"]) || mysql_num_rows($result_bestFri) == 0){
+    if(empty($_POST["bestFri"])) { 
       $numOfErrors += 1;
       $bestFri_error_message = "*Please enter name of your best friend.*";
     }
-
-    if(empty($_POST["highSch"]) || mysql_num_rows($result_highSch) == 0){
+    else {
+      if($bestFri != $securityRow["bestFriend"]){
+	$numOfErrors += 1;
+	$bestFri_error_message = "*Wrong answer*";	
+      }
+    }
+    
+    if(empty($_POST["highSch"])) { 
       $numOfErrors += 1;
       $highSch_error_message = "*Please enter a high school.*";
     }
-
-    if(empty($_POST["petName"]) || mysql_num_rows($result_petName) == 0){
-      $numOfErrors += 1;
-      $petName_error_message = "*Please enter name of your first pet.*";
-
+    else{
+      if($highSch != $securityRow["highSchool"]){
+	$numOfErrors += 1;
+	$highSch_error_message = "*Wrong answer*";
+      }
     }
 
+    if(empty($_POST["petName"])) {
+      $numOfErrors += 1;
+      $petName_error_message = "*Please enter name of your first pet.*";      
+    }
+    else{
+      if($petName != $securityRow["petName"]){
+	$numOfErrors += 1;
+	$petName_error_message = "*Wrong answer*";
+      }
+    }
+    
     if ($numOfErrors == 0){
       header('Location: forgotPassConfirm.php');
-      
     }
+    
 }    
 
 ?>
@@ -68,7 +126,7 @@ if ($_POST) {
   <br>
   
   <br>
-  <label>What is the name of your high school</label><input type="text" name="highSch">
+  <label>What is the name of your high school </label><input type="text" name="highSch">
   
   <span class="error"> <?php echo $highSch_error_message;?></span>
   
@@ -80,7 +138,7 @@ if ($_POST) {
   <span class ="error"> <?php echo $petName_error_message;?></span>
   <br>
 
-
+  <input type="hidden" name="email" value= <?php echo htmlspecialchars($advisorEmail)?>>
   <input type="submit">
 
   <a href="forgotPassEmail.php">

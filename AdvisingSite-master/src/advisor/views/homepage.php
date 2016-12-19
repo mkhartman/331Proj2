@@ -137,7 +137,7 @@ function findStudentsInMeeting($meetingID)
 	<button type="button">Create New Advisor</button>
     </a>   
         <a href="security.php">
-        <button type="button">Set Security Questions</button>
+        <button type="button">Set/Edit Security Questions</button>
     </a>
 
 
