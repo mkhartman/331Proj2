@@ -28,6 +28,13 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
       WHERE MeetingId = '$selectedMeetingID'
     ";
     $open_connection->query($deleteFromMeeting);
+	
+	// Delete From StudentMeeting
+	$deleteFromStudentMeeting = "
+		DELETE FROM StudentMeeting	
+		WHERE MeetingId = '$selectedMeetingID'
+	";
+	$open_connection->query($deleteFromStudentMeeting);
 
     $open_connection->close();
 }
