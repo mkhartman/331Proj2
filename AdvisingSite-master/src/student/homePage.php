@@ -42,7 +42,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
   $sql = "select * from Student where email = " . "'{$_SESSION["STUDENT_EMAIL"]}'";
   $rs = $COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
   $row = mysql_fetch_assoc($rs);
-  
+  $meeting;
   
   echo '<h3>';
   echo 'Welcome ' . $row['firstName'];
@@ -61,8 +61,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
  
   if(mysql_num_rows($select_results) == 0){
     echo "<br>You have not scheduled any appointments.<br>";
+    $meeting = false;
   }
   else{
+    $meeting = true;
     //fetching value from query result
     $results_row = mysql_fetch_array($select_results);
     
@@ -187,12 +189,41 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 <br>
 <br>
 <br>
-<a href="cancelMeeting.php">Cancel Advising Appointment</a>
+  <a onclick="myFunction()">Cancel Advising Appointment</a>
 <br>
 <br>
 <br>
 <a href="logout.php">Log out</a>
 <br>
 <br>
+
+
+<button onclick="myFunction()">Cancel Advising Appointment</button>
+
+<p id="demo"></p>
+
+<?php
+echo '<script language="javascript">';
+?>
+
+function myFunction() {
+ 
+  <?php
+    echo 'if (' . $meeting . ') {';
+  ?>
+    if (confirm("Are you sure you want to delete your meeting") == true) {      
+      window.location = 'deleteMeeting.php';
+    } 
+    else
+      window.location = 'homePage.php';
+  <?php
+    echo '}';
+    echo 'else alert("You do not have a meeting.")';
+  
+?> 
+}  
+</script>
+
 </div>
+</body>
 </html>

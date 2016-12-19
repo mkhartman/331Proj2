@@ -28,3 +28,4 @@ $fileName = "deleteMeeting.php";
   unset($_SESSION['MEETING_ID']);
   header('Location:homePage.php');
 
+?>
