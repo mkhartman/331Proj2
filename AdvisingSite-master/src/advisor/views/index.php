@@ -69,6 +69,11 @@ if ($_POST) {
     <label>
         <input type="submit">
     </label>
+
+  <a href="forgotPassEmail.php">
+  <button type="button">Forgot Password?</button>
+  </a>
+
 </form>
 </body>
 </html>
