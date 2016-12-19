@@ -3,9 +3,9 @@
 function connectToDB()
 {
     $servername = "studentdb-maria.gl.umbc.edu";
-    $username = "XXXXX";
-    $password = "XXXXX";
-    $dbName = "XXXXX";
+    $username = "jlamb2";
+    $password = "jlamb2";
+    $dbName = "jlamb2";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password);

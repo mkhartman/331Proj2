@@ -23,15 +23,15 @@ session_start();
    <option hidden="hidden">
     <?php echo ($_SESSION["MAJOR"]); ?> 
   </option>
-   <option>Biological Sciences BA</option> <!-- option for drop down box for selecting the Major -->
-   <option>Biological Sciences BS</option>
-   <option>Biochemistry & Molecular Biology BS</option>
-   <option>Bioinformatics & Computional Biology BS</option>
-   <option>Biology Education BA</option>
-   <option>Chemistry BA</option>
-   <option>Chemistry BS</option>
-   <option>Chemistry Education BA</option>
-   </td><tr>
+  <option value="Biological Sciences BA">Biological Sciences BA</option>
+    <option value="Biological Sciences BS">Biological Sciences BS</option>
+    <option value="Biochemistry & Molecular Biology BS">Biochemistry & Molecular Biology BS</option>
+    <option value="Bioinformatics & Computational Biology BS">Bioinformatics & Computational Biology BS</option>
+    <option value="Biology Education BA">Biology Education BA</option>
+    <option value="Chemistry BA">Chemistry BA</option>
+    <option value="Chemistry BS">Chemistry BS</option>
+    <option value="Chemistry Education BA">Chemistry Education BA</option>
+    </td><tr>
    <br>
    </select>
    <br>

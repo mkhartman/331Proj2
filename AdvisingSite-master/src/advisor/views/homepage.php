@@ -5,7 +5,7 @@ session_start();
 $allRows = "";
 
 if (!isset($_SESSION["HAS_LOGGED_IN"])) {
-    header('Location: login.php');
+    header('Location: index.php');
 }
 
 
@@ -50,6 +50,34 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
         array_push($allRows, $row);
     }
 
+	
+	// Get all of the advisors in an array
+
+    $open_connection = connectToDB();
+
+    $searchAdvisors = "
+      SELECT 
+        `firstName`,
+	`lastName`,
+	`advisorID`
+      FROM
+        Advisor
+      WHERE
+        1
+      LIMIT
+        0, 30
+    ";
+
+    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
+
+
+//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
+
+    $advisorNames = array();
+    while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
+        array_push($advisorNames, $advisorRow);
+    }
+	
 
     $open_connection->close();
 }
@@ -96,6 +124,7 @@ function findStudentsInMeeting($meetingID)
     <title>Advisor Homepage</title>
 </head>
 <body>
+
 <h1>
     Adviser Home
 </h1>
@@ -108,7 +137,9 @@ function findStudentsInMeeting($meetingID)
     <a href="logout.php">
         <button type="button">Log Out</button>
     </a>
-
+	<a href="register.php">
+	<button type="button">Create New Advisor</button>
+    </a>
     <hr>
 
     <?php foreach ($allRows as $aRow) { ?>
@@ -253,14 +284,130 @@ function findStudentsInMeeting($meetingID)
                     </select>
                 </label>
             </li>
+			
+			<li> 
+				<label>
+					Meeting Advisor:
+					<select name="advisor">
+		                               <?php foreach ($advisorNames as $bRow) { ?>
+											//<?php echo '<option value=' . htmlspecialchars($bRow["advisorID"]) . '>' . htmlspecialchars($bRow["lastName"]) . '</option>' ?>
+											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo htmlspecialchars($bRow["lastName"]); ?> </option>
+					       <?php } ?>
+		                        </select>
+				</label>
+			</li>
+			
             <label>
                 <input type="submit">
             </label>
         </ul>
 
     </form>
-
+	
 <?php } ?>
+
+    <form action="../utils/forms/createMultipleMeeting.php" method="POST">
+        <h4>
+            Create Multiple Meetings
+        </h4>
+        <ul>
+			
+			<li> 
+				<label>
+					Meeting Start Date
+					<input type="date" name="meetingStartDate">
+				<?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
+                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
+                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
+                }
+                ?>
+				</label>
+			</li>
+			
+			<li>
+				<label>
+					Repeat every <input type="number" name="meetingRepeatDays"> days until <input type="date" name="meetingRepeatD">
+				</label>
+			</li>
+				
+		
+            <li>
+                <label>
+                    Meeting Start Time
+                    <input type="time" name="meetingStartTime">
+                </label>
+                <?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
+                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
+                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
+                }
+                ?>
+            </li>
+
+			<li>
+                <label>
+                    Meeting Length (Minutes)
+                    <input type="number" name="meetingLength">
+                </label>
+				<label>
+					Repeat every <input type="number" name="meetingRepeatTime"> minutes until <input type="time" name="meetingRepeat">
+				</label>
+            </li>
+			
+            <li>
+                <label>
+                    Building Name
+                    <input type="text" name="buildingName">
+                </label>
+                <?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"])) {
+                    echo $_SESSION["ERROR_ADVISOR_MEETING_BUILDING"];
+                    unset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"]);
+                }
+                ?>
+			</li>
+
+            <li>
+                <label>
+                    Room Number
+                    <input type="text" name="roomNumber">
+                </label>
+                <?php
+                if (isset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"])) {
+                    echo $_SESSION["ERROR_ADVISOR_MEETING_ROOM"];
+                    unset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"]);
+                }
+                ?>
+			</li>
+
+            <li>
+                <label>
+                    Type of Meeting:
+                    <select name="meetingType">
+                        <option value="group">Group</option>
+                        <option value="individual">Individual</option>
+                    </select>
+                </label>
+            </li>
+			
+			<li> 
+				<label>
+					Meeting Advisor:
+					<select name="advisor">
+					<?php foreach ($advisorRows as $aRow) { ?>
+						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
+					<?php } ?>
+					</select>
+				</label>
+			</li>
+			
+            <label>
+                <input type="submit">
+            </label>
+        </ul>
+
+    </form>
 
 </body>
 </html>
