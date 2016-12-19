@@ -198,8 +198,6 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 <br>
 
 
-<button onclick="myFunction()">Cancel Advising Appointment</button>
-
 <p id="demo"></p>
 
 <?php
