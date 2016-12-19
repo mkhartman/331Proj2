@@ -1,3 +1,4 @@
+
 --
 -- Table structure for table `Advisor`
 --
@@ -5,13 +6,22 @@
 CREATE TABLE IF NOT EXISTS `Advisor` (
   `advisorID` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(254) NOT NULL,
+  `password` text NOT NULL COMMENT 'md5 encrypted passwords',
   `firstName` text NOT NULL,
   `middleName` text,
   `lastName` text NOT NULL,
   `buildingName` text NOT NULL,
   `roomNumber` text NOT NULL,
-  PRIMARY KEY (`advisorID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+  `closed` tinyint(1) DEFAULT '1' COMMENT '1 is closed, 0 is open',
+  PRIMARY KEY (`advisorID`),
+  KEY `advisorID` (`advisorID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+
+
+
+
+
 
 
 
@@ -28,7 +38,14 @@ CREATE TABLE IF NOT EXISTS `Meeting` (
   `meetingType` tinyint(1) NOT NULL COMMENT 'FALSE is an individual meeting. TRUE is a group meeting.',
   `numStudents` tinyint(2) NOT NULL COMMENT 'Keeps track of the number of students in the meeting.',
   PRIMARY KEY (`meetingID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=175 ;
+
+
+
+
+
+
+
 
 
 
@@ -43,8 +60,7 @@ CREATE TABLE IF NOT EXISTS `AdvisorMeeting` (
   PRIMARY KEY (`AdvisorMeetingID`),
   KEY `advisorID` (`advisorID`),
   KEY `meetingID` (`meetingID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=171 ;
 
 --
 -- Constraints for table `AdvisorMeeting`
@@ -53,7 +69,15 @@ ALTER TABLE `AdvisorMeeting`
   ADD CONSTRAINT `AdvisorMeeting_ibfk_1` FOREIGN KEY (`meetingID`) REFERENCES `Meeting` (`meetingID`),
   ADD CONSTRAINT `AdvisorMeeting_ibfk_2` FOREIGN KEY (`advisorID`) REFERENCES `Advisor` (`advisorID`);
 
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 --
 -- Table structure for table `Student`
@@ -67,8 +91,20 @@ CREATE TABLE IF NOT EXISTS `Student` (
   `lastName` text NOT NULL,
   `schoolID` varchar(7) NOT NULL,
   `major` text NOT NULL COMMENT 'coming from a dropdown list',
+  `career` varchar(100) NOT NULL COMMENT 'career interest of student',
+  `comment` mediumtext COMMENT 'comment of students',
   PRIMARY KEY (`StudentID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,9 +120,7 @@ CREATE TABLE IF NOT EXISTS `StudentMeeting` (
   PRIMARY KEY (`StudentMeetingID`),
   KEY `StudentID` (`StudentID`),
   KEY `MeetingID` (`MeetingID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
-
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Constraints for table `StudentMeeting`
@@ -94,3 +128,34 @@ CREATE TABLE IF NOT EXISTS `StudentMeeting` (
 ALTER TABLE `StudentMeeting`
   ADD CONSTRAINT `StudentMeeting_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Student` (`StudentID`),
   ADD CONSTRAINT `StudentMeeting_ibfk_2` FOREIGN KEY (`MeetingID`) REFERENCES `Meeting` (`meetingID`);
+
+
+
+
+
+
+
+
+  
+--
+-- Table structure for table `SecurityQuestion`
+--
+
+CREATE TABLE IF NOT EXISTS `SecurityQuestion` (
+  `securityQuestionID` int(11) NOT NULL AUTO_INCREMENT,
+  `advisorID` int(7) NOT NULL,
+  `bestFriend` text NOT NULL,
+  `highSchool` text NOT NULL,
+  `petName` text NOT NULL,
+  PRIMARY KEY (`securityQuestionID`),
+  KEY `advisorID` (`advisorID`),
+  KEY `advisorID_2` (`advisorID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+
+
+
+--
+-- Constraints for table `SecurityQuestion`
+--
+ALTER TABLE `SecurityQuestion`
+  ADD CONSTRAINT `SecurityQuestion_ibfk_1` FOREIGN KEY (`advisorID`) REFERENCES `Advisor` (`advisorID`);
