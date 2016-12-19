@@ -1,5 +1,5 @@
 <?php
-
+  // delete the student current meeting and then redirect back to homePage
 
 include('../CommonMethods.php');
 session_start();

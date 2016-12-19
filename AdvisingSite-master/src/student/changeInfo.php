@@ -1,12 +1,15 @@
 <?php
-
+// this is the page where student go if they want to change their information
 session_start();
+include 'header.php';
 ?>
+<div class="container">
 
 <strong><font size="6">Edit your info</font></strong>
-
 <table>
 <form action="changeInfoConfirm.php" method="post" name="EditConfirm">
+  <!-- echo htmlspecialchars($_SESSION["Fname"]) set the php variable to html value -->
+
   <tr><td>First Name: </td><td><input type="text" name="tfNewFname" 
    value=<?php echo ($_SESSION["FIRST_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" /></td></tr><br>
 
@@ -47,7 +50,7 @@ session_start();
     <textarea name="comment" rows="5" cols="40">
     <?php echo($_SESSION["COMMENT"]); ?>
     </textarea>
-
+    
 <?php
 
    
@@ -57,10 +60,12 @@ echo '</td></tr>';
 echo '</form>';
 echo '</table>';
 
+// click the button if the student want to go home 
 echo '<form action="homePage.php">';
 echo '<input type="submit" value ="Home">';
 echo '</form>';
-
-
 										       
 ?>
+</div>
+</body>
+</html>
