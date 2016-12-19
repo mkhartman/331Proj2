@@ -23,8 +23,8 @@ if($allRows) {
     
     // choosing which type of appointment
     echo'<tr><td>Choose your type of appointment: </td><td> <select name="ddApointment">';
-    echo'<option>Individual</option>';
     echo'<option>Group</option>';
+    echo'<option>Individual</option>';
     echo'</select></td></tr><br><br>';
     
     // choosing date range
