@@ -4,6 +4,25 @@ session_start();
 
 if ($_SESSION["HAS_LOGGED_IN"]) {
   include '../utils/dbconfig.php';
+ $open_connection = connectToDB();
+    $searchAdvisors = "
+      SELECT 
+        `firstName`,
+	`lastName`,
+	`advisorID`
+      FROM
+        Advisor
+      WHERE
+        1
+      LIMIT
+        0, 30
+    ";
+    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
+//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
+    $advisorNames = array();
+    while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
+        array_push($advisorNames, $advisorRow);
+    }
 }
 
 ?>
