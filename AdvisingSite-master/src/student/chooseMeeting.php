@@ -1,7 +1,5 @@
 <?php
-  // The filter page where student choose the filter requirement for their meeting
 include('../CommonMethods.php');
-include'header.php';
 session_start();
 $COMMON = new Common(false);
 $fileName = "chooseIndividualMeeting.php";
@@ -19,17 +17,14 @@ if($allRows) {
     header('Location:meetingChosen.php');
   }
   else {
-    ?>
-    <div class="container">
-      <?php
     echo"<table>";
     echo'<strong><font size="6">Filter</strong></font>';
     echo'<form action="SignUpFilter.php" method="post" name="SignUpConfirm">';
     
     // choosing which type of appointment
     echo'<tr><td>Choose your type of appointment: </td><td> <select name="ddApointment">';
-    echo'<option>Group</option>';
     echo'<option>Individual</option>';
+    echo'<option>Group</option>';
     echo'</select></td></tr><br><br>';
     
     // choosing date range
@@ -82,9 +77,16 @@ if($allRows) {
     
     // print each of the counselor in AdvisorInfo database
   
+/*    echo'<br><br><tr><td>';
+    echo'<tr><td>Choose your advisor: </td><td> 
+     <select name="ddAdvisor">';
+    echo'<option>Ms. Michelle Bulger</option>';
+    echo'<option>Mrs. Julie Crosby</option>';
+    echo'<option>Ms. Christine Powers</option>';
+    echo'<option>CNMS Advisors</option>';
+*/
     echo'<br><br><tr><td>';
-//    echo'<button class="button" name="Confirm" type="submit">Confirm</button>';
-    echo'<input type="submit" value="Confirm"></input>';
+    echo'<button name="Confirm" type="submit">Confirm</button>';
     echo'</td></tr></form>';
     echo'</table>';
     echo'</body>';
