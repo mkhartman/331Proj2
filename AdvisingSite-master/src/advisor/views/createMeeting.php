@@ -104,7 +104,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 					Meeting Advisor:
 					<select name="advisor">
 		                               <?php foreach ($advisorNames as $bRow) { ?>
-											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo(htmlspecialcars($bRow["firstName"]) . ' ' . htmlspecialchars($bRow["lastName"]); ?> </option>
+											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo(htmlspecialcars($bRow["firstName"]) . ' ' . htmlspecialchars($bRow["lastName"])); ?> </option>
 					       <?php } ?>
 		                        </select>
 </label>
