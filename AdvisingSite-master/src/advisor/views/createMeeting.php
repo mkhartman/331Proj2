@@ -17,8 +17,8 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
       LIMIT
         0, 30
     ";
-    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
-//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
+    $advisorSearchResults = $open_connection->query($searchAdvisors);
+	
     $advisorNames = array();
     while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
         array_push($advisorNames, $advisorRow);
@@ -104,8 +104,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 					Meeting Advisor:
 					<select name="advisor">
 		                               <?php foreach ($advisorNames as $bRow) { ?>
-											//<?php echo '<option value=' . htmlspecialchars($bRow["advisorID"]) . '>' . htmlspecialchars($bRow["lastName"]) . '</option>' ?>
-											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo htmlspecialchars($bRow["lastName"]); ?> </option>
+											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo(htmlspecialcars($bRow["firstName"]) . ' ' . htmlspecialchars($bRow["lastName"]); ?> </option>
 					       <?php } ?>
 		                        </select>
 </label>
