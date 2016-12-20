@@ -110,7 +110,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 </label>
 		
             <label>
-                <input type="submit">
+                <input class="submit" type="submit">
             </label>
         </ul>
 

@@ -86,14 +86,15 @@ session_start();
       <option value="Individual">Individual</option>
       <option value="Group">Group</option>
       </select>
-
-<form action="../utils/forms/deleteMeeting.php" method="POST">
-	<input type="hidden" value="<?php echo $selectedMeetingID; ?>" name="meetingID">
-	<input type="submit">
-	</form>
+      
       <input class="submit" type="submit" value="Make Changes">
       <br><br>
       </form>
+      <form action="../utils/forms/deleteMeeting.php" method="POST">
+	<input type="hidden" value="<?php echo $selectedMeetingID; ?>" name="meetingID">
+      <input class="submit" type="submit" value="Delete Meeting">
+	</form>
+
 <a href="homepage.php" >Back to homepage</a>
 <?php
 

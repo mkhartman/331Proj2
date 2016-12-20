@@ -124,7 +124,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 			</li>
 			
 <label>
-                <input type="submit">
+                <input class="submit" type="submit">
             </label>
         </ul>
 

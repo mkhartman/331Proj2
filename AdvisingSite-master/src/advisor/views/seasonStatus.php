@@ -3,6 +3,7 @@ session_start();
 
 if($_SESSION["HAS_LOGGED_IN"]) {
   include '../utils/dbconfig.php';
+  include 'header.php';
 }
 
 
@@ -49,10 +50,10 @@ if($_SESSION["HAS_LOGGED_IN"]) {
 <br>
 
   <a href="homepage.php">Back to hompage</a>
+<br><br>
 
 					 <?php     } ?>
 </div>
-
 </body>
 </html>
 

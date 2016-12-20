@@ -21,7 +21,6 @@ session_start();
     <th>First Name</th>
     <th>Major</th>
   </tr>
-  <tr>
 <?php
 if ($_SESSION["HAS_LOGGED_IN"]) {
   include '../utils/dbconfig.php';
@@ -39,30 +38,31 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     array_push($all_meetings, $meet);
   }
   foreach ($all_meetings as $appointment) {
-?>
-<tr>
-   <td align="center"><?php echo $appointment['start']; ?></td>
-<?php
     $meetingID = $appointment['meetingID'];
-    $findStudent = "SELECT * FROM StudentMeeting WHERE MeetingID=$meetingID";
-    $row = $open_connection->query($findStudent);
-    $students = array();
+    $all_students = array();
+    $students = "SELECT * FROM StudentMeeting WHERE MeetingID=$meetingID";
+    $row = $open_connection->query($students);
     while ($stud = $row->fetch_assoc()) {
-      array_push($students, $stud);
+      array_push($all_students, $stud);
     }
-    foreach ($students as $student) {
-      $ID = $student['StudentID'];
-      $information = "SELECT * FROM Student WHERE StudentID=$ID";
-      $row = $open_connection->query($information);
-      $info = $row->fetch_assoc();
+    foreach ($all_students as $oneStudent) {
+      //finds the meetings that are for the logged in advisor
+      $studentID = $oneStudent['StudentID'];
+        $findStudent = "SELECT * FROM Student WHERE
+         StudentID=$studentID";
+      $row2 = $open_connection->query($findStudent);
+      $info = $row2->fetch_assoc();
 ?>
+      <td align="center"><?php echo $appointment['start'];?></td>
       <td align="center"><?php echo $info['schoolID']; ?></td>
       <td align="center"><?php echo $info['lastName']; ?></td>
       <td align="center"><?php echo $info['firstName']; ?></td>
       <td align="center"><?php echo $info['major']; ?></td>
+<tr>
+
 <?php
     }
-?> <tr>
+?> 
 <?php
   }
 
