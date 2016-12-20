@@ -26,13 +26,13 @@
             }
             ?>
         </li>
-
+	<!--
         <li>
             <label>
                 Middle Name: <input type="text" name="mName">
             </label>
         </li>
-
+	-->
         <li>
             <label>
                 Last Name: <input type="text" name="lName">
