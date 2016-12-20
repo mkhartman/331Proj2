@@ -41,7 +41,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
   foreach ($all_meetings as $appointment) {
 ?>
 <tr>
-   <td align="center"><a href="homePage.php"><?php echo $appointment['start']; ?></a></td>
+   <td align="center"><?php echo $appointment['start']; ?></td>
 <?php
     $meetingID = $appointment['meetingID'];
     $findStudent = "SELECT * FROM StudentMeeting WHERE MeetingID=$meetingID";
