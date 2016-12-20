@@ -17,28 +17,9 @@ if(isset ($_POST["email"])){
     $COMMON = new Common($debug);
     $fileName = "forgotPassEmail.php";
 
-    //get advisorID from the email
     $search_email = "SELECT * FROM Advisor WHERE email = '$email'";
     $result_email = $COMMON->executequery($search_email, $fileName);
-    $row = mysql_fetch_array($result_email);
-    $advisorID = $row["advisorID"];
 
-    //get row from the SecurityQuestion table that matches ID
-    $security_sql = "Select * FROM SecurityQuestion Where advisorID = '$advisorID'";
-    $rs = $COMMON->executequery($security_sql,$fileName);
-    if(mysql_num_rows($rs) == 0){
-      $_SESSION["emailErrorMessage"] = "*Did not set security questions*";
-      header('Location: forgotPassEmail.php');
-    }
-
-
-    
-//echo $numRows;
-    //$number = $numRows['bestFriend'];
-    //echo $number;
-
-
- 
 
     //if email field is left empty or does not exist in table                                                                                 
     if(empty($_POST["email"]) || mysql_num_rows($result_email) == 0){
@@ -47,13 +28,18 @@ if(isset ($_POST["email"])){
       header('Location: forgotPassEmail.php');
     }
 
+    else{
+      $row = mysql_fetch_array($result_email);
+      $advisorID = $row["advisorID"];
+      $_SESSION['advisorID'] = $advisorID;
+    }
   }
-  
+
+
+
 }
 
 if(isset ($_POST["bestFri"])) {
-  
- 
     
   $bestFri = $_POST["bestFri"];
   $highSch = $_POST["highSch"];

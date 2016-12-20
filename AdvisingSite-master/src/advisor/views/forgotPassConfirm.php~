@@ -27,10 +27,10 @@ session_start();
     $advisorID = $_SESSION['advisorID'];
     $filename = "forgotPassConfirm.php";
 
-    $openConnection = connectToDB();
-   
+    connect
+    
     $sql = "UPDATE `Advisor` SET `password` = '$pass' WHERE `advisorID` = '$advisorID'";
-    $rs = $openConnection->query($sql);
+    $rs = $COMMON->query($sql, $filename);
 
     header("Location: index.php");
   }

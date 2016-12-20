@@ -7,6 +7,29 @@ $email_error_message = "";
 
 
 
+if ($_POST) {
+  $email = strtolower($_POST["email"]);
+
+  $debug = true;
+  $COMMON = new Common($debug);
+  $fileName = "forgotPassEmail.php";
+
+  $search_email = "SELECT * FROM Advisor WHERE email = '$email'";
+  $result_email = $COMMON->executequery($search_email, $fileName);
+  
+
+  //if email field is left empty or does not exist in table                     
+  if(empty($_POST["email"]) || mysql_num_rows($result_email) == 0){
+    $email_error_message = "*Please enter a valid email*";
+  }
+
+  else{
+    $row = mysql_fetch_array($result_email);
+    $advisorID = $row["advisorID"]; 
+    header('Location: forgotPassEmail.php');
+  }
+}
+
 ?>     
 
 
