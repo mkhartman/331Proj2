@@ -26,13 +26,13 @@
             }
             ?>
         </li>
-
+	<!--
         <li>
             <label>
                 Middle Name: <input type="text" name="mName">
             </label>
         </li>
-
+	-->
         <li>
             <label>
                 Last Name: <input type="text" name="lName">
@@ -56,6 +56,18 @@
             }
             ?>
         </li>
+
+	<li>
+	    <label>
+              	Password: <input type="password" name="pass">
+            </label>
+            <?php
+            if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_PASS"])) {
+                echo $_SESSION["ERROR_ADVISOR_REGISTRATION_PASS"];
+                unset($_SESSION["ERROR_ADVISOR_REGISTRATION_PASS"]);
+            }
+            ?>   
+	</li>
 
         <li>
             <label>

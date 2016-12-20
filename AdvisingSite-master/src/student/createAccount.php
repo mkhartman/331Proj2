@@ -113,7 +113,7 @@ if($_POST){
 <div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
 	  
- <h1>Welcome to the CMNS advising site.</h1>
+ <h1>Welcome to the CNMS advising site.</h1>
  <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
 <div class="sign-up">

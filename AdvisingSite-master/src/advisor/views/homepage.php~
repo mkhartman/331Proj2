@@ -140,10 +140,7 @@ function findStudentsInMeeting($meetingID)
         <button type="button">Set/Edit Security Questions</button>
     </a>
 
-    <a href="forgotPassConfirm.php">
-	<button type="button">Change Password</button>
-    </a>
-									       
+
 
     <hr>
 
