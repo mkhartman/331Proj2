@@ -37,7 +37,7 @@ if ($_SESSION["HAS_LOGGED_IN"] and $_POST) {
     }
 
     if ($numOfErrors == 0) {
-
+ $advisorID = $_SESSION["ADVISOR_ID"];
         $startDate = new DateTime($start);
 
         // Add 30 mins
