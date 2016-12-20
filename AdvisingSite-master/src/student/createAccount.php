@@ -1,5 +1,5 @@
 <?php
-  // page where the student can create an account
+
 include('header.php');
 include('../CommonMethods.php');
  $debug = true;
@@ -51,7 +51,16 @@ if($_POST){
     $misc_error = true;
     $email_error_message = "Please enter a valid e-mail address";
   }
-
+	
+  /*if(!preg_match("^[a-zA-Z]?^",$_POST["fName"])) {
+    $misc_error = true;
+    $fName_error_message = "Please enter a valid first name";
+  }
+  
+  if(!preg_match("^[a-zA-Z]?^",$_POST["lName"])) {
+    $misc_error = true;
+    $lName_error_message = "Please enter a valid last name";
+  }*/	
   if(!preg_match("^[a-zA-Z]{2}[0-9]{5}^", $_POST["schoolID"])){
     $misc_error = true;
     $schoolID_error_message = "Please enter a valid student ID";
@@ -82,7 +91,9 @@ if($_POST){
     $misc_error = true;
     $career_error_message = "Please enter your career interest, else enter Undecided";
   }
-
+  if($_POST["major"] == "Other..") {
+    header('Location: other.php');
+  }
 
   //query activity after determining if no errors have occured
   if($invalid_email == false && $misc_error == false && $student_exists == false){
@@ -113,7 +124,7 @@ if($_POST){
 <div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"/>
 	  
- <h1>Welcome to the CNMS advising site.</h1>
+ <h1>Welcome to the CMNS advising site.</h1>
  <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
 <div class="sign-up">
@@ -128,16 +139,25 @@ if($_POST){
  <span class="error"> <?php echo "<br>"; echo $lName_error_message;?></span>
  <label></label><input placeholder="Last Name" type="text" name="lName" value="<?php if(isset($_POST['lName'])) {echo $_POST['lName']; }?>" />
 
- <label></label><input placeholder="Preferred Name (Optional)" type="text" name="mName" value="<?php if(isset($_POST['mName'])) {echo $_POST['mName']; }?>" />
+ <label></label><input placeholder="Preferred Name [Optional]" type="text" name="mName" value="<?php if(isset($_POST['mName'])) {echo $_POST['mName']; }?>" />
   
  <span class="error"> <?php echo "<br>";echo $schoolID_error_message;?></span>
  <label></label><input placeholder="Student ID" type="varchar" name="schoolID" value="<?php if(isset($_POST['schoolID'])) {echo $_POST['schoolID']; }?>" />
  
- <span class="error"> <?php echo "<br>";echo $career_error_message;?></span>
+<!-- <span class="error"> <?php echo "<br>";echo $career_error_message;?></span>
  <label></label><input placeholder="Career Interest" type="varchar" name="career" 
  value="<?php if(isset($_POST['career'])) {echo $_POST['career']; }?>" />
- 		   
-
+-->		   
+	  <select name="career">
+	  <option value="">Select a career path</option>
+          <option value="Research">Research</option>
+	  <option value="Health">Health</option>
+	  <option value="Profession">Profession</option>
+	  <option value="Industry">Industry</option>
+	  <option value="Education">Education</option>
+	  <option value="Other">Other</option>
+	  <option value="Uncertain">Uncertain</option>
+</select> 
  <label></label>
 	  <select name="major">
 	  <option value="">Select a major</option>
@@ -149,6 +169,8 @@ if($_POST){
 	  <option value="Chemistry BA">Chemistry BA</option>
 	  <option value="Chemistry BS">Chemistry BS</option>
 	  <option value="Chemistry Education BA">Chemistry Education BA</option>
+	  <option value="Other..">Other..</option>
+									 
 </select>
   <span class="error"> <?php $major_error_message;?></span>
 <input class="submit" type="submit" value="Log In">
