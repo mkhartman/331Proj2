@@ -1,118 +1,14 @@
 <?php
-include ('../../student/header.php');
+include ('header.php');
 session_start();
-
-$allRows = "";
 
 if (!isset($_SESSION["HAS_LOGGED_IN"])) {
     header('Location: index.php');
 }
-
-
 // IF THERE ARE LOGGED IN
 if ($_SESSION["HAS_LOGGED_IN"]) {
     include '../utils/dbconfig.php';
-
-    // Create meeting first and then add advisor to meeting ; DISPLAY MEETINGS
-    // Create meeting form that lets the advisor create a meeting
-
-    // Includes the form for creating meetings
-    $advisorID = $_SESSION["ADVISOR_ID"];
-
-    $open_connection = connectToDB();
-
-    $searchAdvisorMeetings = "
-      SELECT 
-        Advisor.AdvisorID, 
-        Meeting.meetingID,
-        Meeting.start, 
-        Meeting.end,
-        Meeting.buildingName, 
-        Meeting.roomNumber,
-        Meeting.meetingType
-      From 
-        Advisor
-      INNER JOIN 
-        AdvisorMeeting ON Advisor.AdvisorID = AdvisorMeeting.AdvisorID
-      INNER JOIN 
-        Meeting ON AdvisorMeeting.MeetingID = Meeting.MeetingID 
-      WHERE 
-        Advisor.advisorID = '$advisorID'
-    ";
-
-    $searchResults = $open_connection->query($searchAdvisorMeetings);
-
-
-//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
-
-    $allRows = array();
-    while ($row = $searchResults->fetch_assoc()) {
-        array_push($allRows, $row);
-    }
-
-	
-	// Get all of the advisors in an array
-
-    $open_connection = connectToDB();
-
-    $searchAdvisors = "
-      SELECT 
-        Advisor.firstName;
-		Advisor.lastName;
-		Advisor.advisorID;
-      From 
-        Advisor
-    ";
-
-    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
-
-
-//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
-
-    $advisorNames = array();
-    while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
-        array_push($advisorNames, $advisorRow);
-    }
-	
-
-    $open_connection->close();
 }
-
-/*
- * Returns an array of objects
- */
-function findStudentsInMeeting($meetingID)
-{
-    $open_connection = connectToDB();
-
-    $queryForStudent = "
-        SELECT
-          Student.StudentID,
-          Student.email,
-          Student.firstName,
-          Student.lastName,
-          Student.schoolID,
-          Student.major
-        FROM Student
-          INNER JOIN
-          StudentMeeting ON Student.StudentID = StudentMeeting.StudentID
-          INNER JOIN
-          Meeting ON StudentMeeting.MeetingID = Meeting.meetingID
-        WHERE Meeting.meetingID = '$meetingID'
-    ";
-
-    $studentResults = $open_connection->query($queryForStudent);
-
-
-    $studentInfos = array();
-
-    while ($studentInfo = $studentResults->fetch_assoc()) {
-        array_push($studentInfos, $studentInfo);
-    }
-
-    return $studentInfos;
-}
-
 ?>
 
 <html>
@@ -120,302 +16,91 @@ function findStudentsInMeeting($meetingID)
     <title>Advisor Homepage</title>
 </head>
 <body>
-
-<h1>
-    Adviser Home
-</h1>
-
+<div class="container">
+<h1> Adviser Home </h1>
+<table style="width:100%">
+  <tr>
+    <th>Start Date and Time</th>
+    <th>End Date and Time</th>
+    <th>Building Name</th>
+    <th>Room Number</th>
+    <th>Type of Meeting</th>
+    <th>Number of students</th>
+  </tr>
+<tr>
 <?php if ($_SESSION["HAS_LOGGED_IN"]) { ?>
     <h3>
-        Welcome <?php echo htmlspecialchars($_SESSION["ADVISOR_FNAME"]); ?>, here are your meetings.
+        Welcome <?php echo htmlspecialchars($_SESSION["ADVISOR_FNAME"]); ?>
     </h3>
+   <?php
+									   
+  $ID = $_SESSION["ADVISOR_ID"];
+  $open_connection = connectToDB();
+  $result = "SELECT * FROM Advisor WHERE advisorID=$ID";
+  $connect = $open_connection->query($result);
+  $data = $connect->fetch_assoc();
+  $status = $data['closed'];
+  if ($status == "true") {
+    echo "Not Open";
+  }
 
-    <a href="logout.php">
-        <button type="button">Log Out</button>
-    </a>
-	<a href="register.php">
-	<button type="button">Create New Advisor</button>
-    </a>   
-        <a href="security.php">
-        <button type="button">Set/Edit Security Questions</button>
-    </a>
+  ?>
+    <a href="seasonStatus.php">Season Status</a>               
+       <a href="register.php">Create Advisor</a>
+       <a href="createMeeting.php">Create Single Meeting</a>
+       <a href="createMultipleMeeting.php">Create Multiple Meeting</a>
+       <a href="viewAllApointments.php">View all appointments</a>
+       <a href="logout.php">Log Out</a>
+<br><br>
+       <?php } 
 
-    <a href="forgotPassConfirm.php">
-	<button type="button">Change Password</button>
-    </a>
-									       
+$all_meetings = array();
 
-    <hr>
+$meetings = "SELECT * FROM Meeting ORDER BY start ASC";
+$row = $open_connection->query($meetings);
 
-    <?php foreach ($allRows as $aRow) { ?>
-        <h4>Meeting</h4>
+$all_meetings = array();
+while ($meet = $row->fetch_assoc()) {
+  array_push($all_meetings, $meet);
+}
+foreach ($all_meetings as $appointment) {
+  //finds the meetings that are for the logged in advisor
+  $meetingID = $appointment['meetingID'];
+        $findInAdvisorMeetings = "SELECT * FROM AdvisorMeeting WHERE
+         meetingID=$meetingID";
+        $row2 = $open_connection->query($findInAdvisorMeetings);
+        $data = $row2->fetch_assoc();
+	$currentAdvisor = $_SESSION["ADVISOR_ID"];
+        $advisorID = $data['advisorID'];
+        if ($currentAdvisor == $advisorID) {
+?>
+          <tr>
+          <form action="viewEditMeeting.php" method="POST">
+            <input name="meetingID" value="<?php echo $appointment['meetingID']; ?>" hidden/>
+            <td align="center"><input type="submit" value="<?php echo $appointment['start'];?>"></td>
+            <td align="center"><input type="submit" value="<?php echo $appointment['end'];?>"></td>
+            <td align="center"><input type="submit" value="<?php echo $appointment['buildingName'];?>"></td>
+            <td align="center"><input type="submit" value="<?php echo $appointment['roomNumber'];?>"></td>
+            <td align="center"><input type="submit" value="<?php if ($appointment['meetingType'] == 0) {
+            echo "Individual";
+          }
+          else {
+            echo "Group";
+          }?>"></td>
+            </form>
+            <form action="viewStudents.php" method="POST">
+            <input name="meetingID" value="<?php echo $appointment['meetingID']; ?>" hidden/>
+            <td align="center"><input type="submit" value="<?php if ($appointment['numStudents']==0) {
+            echo "Empty";
+            }
+            else {
+            echo $appointment['numStudents'];
+            }?>"></td>
+</form>
+	    <?php }
+}?>
 
-        <div class="meetingInfo">
-            <ul>
-                <form action="../utils/forms/deleteMeeting.php" method="POST">
-                    <input name="meetingID" value="<?php echo htmlspecialchars($aRow["meetingID"]) ?>" hidden>
-
-                    <input type="submit" value="Delete Meeting">
-                </form>
-
-                <!-- Will need to use this value for selecting future values -->
-                <li hidden>
-                    Meeting Id: <?php echo htmlspecialchars($aRow["meetingID"]) ?>
-                </li>
-                <li>
-                    Start: <?php echo htmlspecialchars($aRow["start"]) ?>
-                </li>
-                <li>
-                    End: <?php echo htmlspecialchars($aRow["end"]) ?>
-                </li>
-                <li>
-                    Building Name: <?php echo htmlspecialchars($aRow["buildingName"]) ?>
-                </li>
-                <li>
-                    Room Number: <?php echo htmlspecialchars($aRow["roomNumber"]) ?>
-                </li>
-                <li>
-                    Meeting Type:
-                    <?php
-                    if ($aRow["meetingType"] == 0) {
-                        echo htmlspecialchars("Individual");
-                    } else {
-                        echo htmlspecialchars("Group");
-                    }
-                    ?>
-                </li>
-            </ul>
-        </div>
-
-        <div class="studentInfo">
-            <h4>Students in Meeting</h4>
-            <?php
-            $studentsInfo = findStudentsInMeeting($aRow["meetingID"]);
-            ?>
-
-            <?php foreach ($studentsInfo as $studentInfo) { ?>
-                <ul>
-                    <li hidden>
-                        Student ID: <?php echo htmlspecialchars($studentInfo["StudentID"]) ?>
-                    </li>
-
-                    <li>
-                        Email: <?php echo htmlspecialchars($studentInfo["email"]) ?>
-                    </li>
-                    <li>
-                        First Name: <?php echo htmlspecialchars($studentInfo["firstName"]) ?>
-                    </li>
-                    <li>
-                        Last Name: <?php echo htmlspecialchars($studentInfo["lastName"]) ?>
-                    </li>
-
-                    <li>
-                        Student ID: <?php echo htmlspecialchars($studentInfo["schoolID"]) ?>
-                    </li>
-
-                    <li>
-                        Major: <?php echo htmlspecialchars($studentInfo["major"]) ?>
-                    </li>
-                </ul>
-            <?php } ?>
-
-        </div>
-
-        <hr>
-    <?php } ?>
-
-    <form action="../utils/forms/createMeeting.php" method="POST">
-        <h4>
-            Create a Meeting
-        </h4>
-        <ul>
-            <li>
-                <label>
-                    Meeting Start Date
-                    <input type="datetime-local" name="meetingStartTime">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
-            </li>
-
-			<li>
-                <label>
-                    Meeting End Date
-                    <input type="datetime-local" name="meetingEndTime">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-		  echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-		  unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
-            </li>
-            <li>
-                <label>
-                    Building Name
-                    <input type="text" name="buildingName">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_BUILDING"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"]);
-                }
-                ?>
-            </li>
-
-            <li>
-                <label>
-                    Room Number
-                    <input type="text" name="roomNumber">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_ROOM"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"]);
-                }
-                ?>
-            </li>
-
-            <li>
-                <label>
-                    Type of Meeting:
-                    <select name="meetingType">
-                        <option value="group">Group</option>
-                        <option value="individual">Individual</option>
-                    </select>
-                </label>
-            </li>
-			
-			<li> 
-				<label>
-					Meeting Advisor:
-					<select name="advisor">
-					<?php foreach ($advisorRows as $aRow) { ?>
-						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
-					<?php } ?>
-				</label>
-			</li>
-			
-            <label>
-                <input type="submit">
-            </label>
-        </ul>
-
-    </form>
-
-	<form action="multipleMeetings.php" method="POST">
-		<label>
-			<input type="submit">
-		</label>
-	</form>
-	
-<?php } ?>
-
-    <form action="../utils/forms/createMultipleMeeting.php" method="POST">
-        <h4>
-            Create Multiple Meetings
-        </h4>
-        <ul>
-			
-			<li> 
-				<label>
-					Meeting Start Date
-					<input type="date" name="meetingStartDate">
-				<?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
-				</label>
-			</li>
-			
-			<li>
-				<label>
-					Repeat every <input type="number" name="meetingRepeatDays"> days until <input type="date" name="meetingRepeatD">
-				</label>
-			</li>
-				
-		
-            <li>
-                <label>
-                    Meeting Start Time
-                    <input type="time" name="meetingStartTime">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
-            </li>
-
-			<li>
-                <label>
-                    Meeting Length (Minutes)
-                    <input type="number" name="meetingLength">
-                </label>
-				<label>
-					Repeat every <input type="number" name="meetingRepeatTime"> minutes until <input type="time" name="meetingRepeat">
-				</label>
-            </li>
-			
-            <li>
-                <label>
-                    Building Name
-                    <input type="text" name="buildingName">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_BUILDING"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_BUILDING"]);
-                }
-                ?>
-			</li>
-
-            <li>
-                <label>
-                    Room Number
-                    <input type="text" name="roomNumber">
-                </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_ROOM"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_ROOM"]);
-                }
-                ?>
-			</li>
-
-            <li>
-                <label>
-                    Type of Meeting:
-                    <select name="meetingType">
-                        <option value="group">Group</option>
-                        <option value="individual">Individual</option>
-                    </select>
-                </label>
-            </li>
-			
-			<li> 
-				<label>
-					Meeting Advisor:
-					<select name="advisor">
-					<?php foreach ($advisorRows as $aRow) { ?>
-						<option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]); echo htmlspecialchars($aRow["lastName"]); ?></option>
-					<?php } ?>
-				</label>
-			</li>
-			
-            <label>
-                <input type="submit">
-            </label>
-        </ul>
-
-    </form>
-
+</tabl>
+</div>
 </body>
 </html>
