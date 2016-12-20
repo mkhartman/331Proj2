@@ -80,7 +80,7 @@ if($_POST){
   }
   if(empty($_POST["career"])){
     $misc_error = true;
-    $career_error_message = "Please enter your career interest, else enter Undecided";
+    $career_error_message = "Please enter a career interst, or undecided";
   }
 
 
