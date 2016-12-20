@@ -1,6 +1,17 @@
 <?php
 include('../CommonMethods.php');
+include 'header.php';
 session_start();
+?>
+<html>
+<head>
+    <title>Advisor Homepage</title>
+</head>
+<body>
+<div class="container">
+<h1> Adviser Home </h1>
+
+<?php
 $filename = "SignUpFilter.php";
 
 // this page show all the meeting that match the student's filter
@@ -158,17 +169,13 @@ if ($numAppointmentMatch == 0) {
 }
 
 else { 
-  echo '<button name="Confirm" type="submit">Confirm</button>';
+  echo '<input type="submit" class="submit" name="Confirm"></button>';
   echo '</form>';
 }
 mysql_free_result($rs);
 
 ?>
-
-<form action="chooseMeeting.php">
-   <input type="submit" value = "Change Filter">
-</form>
-
-<form action="homePage.php">
-   <input type="submit" value = "Go Home">
-</form>
+<br><br>
+ <a href="chooseMeeting.php">Change Filter</a>
+<br><br><br>
+ <a href="homePage.php">Back to Homepage</a>

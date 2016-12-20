@@ -4,31 +4,30 @@ session_start();
 include 'header.php';
 ?>
 <div class="container">
-
+<div class="info">
 <strong><font size="6">Edit your info</font></strong>
-<table>
 <form action="changeInfoConfirm.php" method="post" name="EditConfirm">
   <!-- echo htmlspecialchars($_SESSION["Fname"]) set the php variable to html value -->
 
-  <tr><td>First Name: </td><td><input type="text" name="tfNewFname" 
-   value=<?php echo ($_SESSION["FIRST_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" /></td></tr><br>
+  <tr><td></td><td><input type="text" name="tfNewFname" 
+   value=<?php echo ($_SESSION["FIRST_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" placeholder="First Name"/></td></tr><br>
 
-  <tr><td>Last Name: </td><td><input type="text" name="tfNewLname" 
-  value=<?php echo ($_SESSION["LAST_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" /></td></tr><br>
+  <tr><td></td><td><input type="text" name="tfNewLname" 
+  value=<?php echo ($_SESSION["LAST_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" placeholder="Last Name"/></td></tr><br>
 
-  <tr><td>Preferred Name: </td><td><input type="text" name="tfNewPname" 
-  value=<?php echo ($_SESSION["NICK_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" /></td></tr><br>
+  <tr><td></td><td><input type="text" name="tfNewPname" 
+  value=<?php echo ($_SESSION["NICK_NAME"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" placeholder="Preferred Name"/></td></tr><br>
 
-  <tr><td>Email: </td><td><input type="text" name="tfNewEmail" 
+  <tr><td></td><td><input type="text" name="tfNewEmail" placeholder="Email"
   value=<?php echo ($_SESSION["STUDENT_EMAIL"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled /></td></tr><br>
  
-  <tr><td>Student ID: </td><td><input type="text" name="tfStuID" 
+  <tr><td></td><td><input type="text" name="tfStuID" placeholder="SchoolID"
   value=<?php echo ($_SESSION["SCHOOL_ID"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" disabled /></td></tr><br>
     
-  <tr><td>Career Interest: </td><td><input type="text" name="tfCareer" 
+  <tr><td></td><td><input type="text" name="tfCareer" placeholder="Career"
   value=<?php echo ($_SESSION["CAREER"]); ?> onfocus="inputFocus(this)" onblur="inputBlur(this)" /></td></tr><br>
   
-  <tr><td>Major     : </td><td><select name="ddNewMajor">
+  <tr><td></td><td><select name="ddNewMajor">
     <!-- the default option is their previous used Major, the option is also hidden -->
    <option hidden="hidden">
     <?php echo ($_SESSION["MAJOR"]); ?> 
@@ -55,17 +54,18 @@ include 'header.php';
 
    
 echo '<tr><td>';
-echo '<button name="Confirm" type="submit">Confirm</button>';
+echo '<br><br>';
+echo '<input class="submit" type="submit"></button>';
 echo '</td></tr>';
 echo '</form>';
 echo '</table>';
 
 // click the button if the student want to go home 
-echo '<form action="homePage.php">';
-echo '<input type="submit" value ="Home">';
-echo '</form>';
+echo '<br><br>';
+echo '<a href="homePage.php">Back to Homepage</a>';
 										       
 ?>
+</div>
 </div>
 </body>
 </html>

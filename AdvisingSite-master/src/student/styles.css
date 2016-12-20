@@ -2,7 +2,6 @@ html {
     background-image: url("http://undergraduate.umbc.edu/img/visit-image-cropped.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-
 }
 
 header {
@@ -21,6 +20,7 @@ header {
 }
 
 .container {
+    font-family: Georgia;
     text-align: center;
     padding-left: 2%;
     padding-bottom: 1%;
@@ -32,6 +32,15 @@ header {
     box-shadow: 0px 0px 15px 15px #ffffff; 
 }
 
+.info {
+    font-family: Georgia;
+    text-align: left;
+    padding-left: 2%;
+    padding-bottom: .5%;
+    position: relative;
+    background-color: white;
+
+} 
 .sign-up {
     font-family: Georgia;
     text-align: left;
@@ -99,7 +108,7 @@ select:hover {
 }
 
 .submit {
-    font-family: Arial;
+    font-family: Georgia;
     border-radius: 4px;
     font-size: 16px;
     padding: 5px;
