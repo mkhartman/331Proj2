@@ -1,12 +1,11 @@
 <?php
+// this file will access the database and change all the data for the specific student email, then redirect to homePage
 include '../CommonMethods.php';
 session_start();
 
-// this file will access the database and change all the data for the specific Student ID
 
 $_SESSION["FIRST_NAME"] = $_POST["tfNewFname"]; // first name of student "tf" stand for text field
 $_SESSION["LAST_NAME"] = $_POST["tfNewLname"]; // last name of student 
-//$_SESSION["STUDENT_EMAIL"] = $_POST["tfNewEmail"]; // email of student
 $_SESSION["MAJOR"] = $_POST["ddNewMajor"]; // Major of Student, "dd" stand for drop down
 $_SESSION["CAREER"] = $_POST["tfCareer"];  // Career interest of student
 $_SESSION["NICK_NAME"] = $_POST["tfNewPname"]; // Preferred name
@@ -28,10 +27,7 @@ where `email` = '" . $_SESSION["STUDENT_EMAIL"]. "'";
 $filename = "InfoEditConfirm.php";
 $rs = $COMMON->executeQuery($sql, $filename);
 
-echo "Your information have been changed!";
+header('Location:homePage.php');
 
-echo '<form action="homePage.php">';
-echo '<input type="submit" value ="Home">';
-echo '</form>';
 ?>
 

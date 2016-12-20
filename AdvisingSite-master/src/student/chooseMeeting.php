@@ -1,5 +1,7 @@
 <?php
+  // The filter page where student choose the filter requirement for their meeting
 include('../CommonMethods.php');
+include'header.php';
 session_start();
 $COMMON = new Common(false);
 $fileName = "chooseIndividualMeeting.php";
@@ -17,14 +19,17 @@ if($allRows) {
     header('Location:meetingChosen.php');
   }
   else {
+    ?>
+    <div class="container">
+      <?php
     echo"<table>";
     echo'<strong><font size="6">Filter</strong></font>';
     echo'<form action="SignUpFilter.php" method="post" name="SignUpConfirm">';
     
     // choosing which type of appointment
     echo'<tr><td>Choose your type of appointment: </td><td> <select name="ddApointment">';
-    echo'<option>Individual</option>';
     echo'<option>Group</option>';
+    echo'<option>Individual</option>';
     echo'</select></td></tr><br><br>';
     
     // choosing date range
@@ -78,7 +83,8 @@ if($allRows) {
     // print each of the counselor in AdvisorInfo database
   
     echo'<br><br><tr><td>';
-    echo'<button name="Confirm" type="submit">Confirm</button>';
+//    echo'<button class="button" name="Confirm" type="submit">Confirm</button>';
+    echo'<input type="submit" value="Confirm"></input>';
     echo'</td></tr></form>';
     echo'</table>';
     echo'</body>';
@@ -89,4 +95,4 @@ else {
   header('Location:closed.php');
 }    
 ?>
-<a href="homePage.hp">Back to homepage</a>
+<a href="homePage.php">Back to homepage</a>

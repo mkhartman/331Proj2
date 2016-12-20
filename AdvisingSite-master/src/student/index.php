@@ -8,6 +8,8 @@
 
 
 <?php
+     // the log in website for student using only their email
+     // also the first page that the student see
   include('header.php');
   include '../CommonMethods.php';  
 
@@ -49,21 +51,21 @@ if ($_POST) {  $email = strtolower($_POST["email"]);
       
       $studentDict = mysql_fetch_assoc($rs);
       
-      $_SESSION["HAS_LOGGED_IN"] = true;
-      $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];
-      $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];
-      $_SESSION["MAJOR"] = $studentDict["major"];
-      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];
-      $_SESSION["LAST_NAME"] = $studentDict["lastName"];
-      $_SESSION["SCHOOL_ID"] = $studentDict["schoolID"];
-      $_SESSION["CAREER"] = $studentDict["career"];  
+      $_SESSION["HAS_LOGGED_IN"] = true;                     // true if student is logged in
+      $_SESSION["STUDENT_EMAIL"] = $studentDict["email"];    // the email of the student
+      $_SESSION["STUDENT_ID"] = $studentDict["StudentID"];   // the ID of the student in the database NOT school ID
+      $_SESSION["MAJOR"] = $studentDict["major"];            // the major of the student
+      $_SESSION["FIRST_NAME"] = $studentDict["firstName"];   // the first name of the student
+      $_SESSION["LAST_NAME"] = $studentDict["lastName"];     // the last name of the student
+      $_SESSION["SCHOOL_ID"] = $studentDict["schoolID"];     // the school iD of student, usually in format AB12345
+      $_SESSION["CAREER"] = $studentDict["career"];          // career interest of student
       if ($studentDict["middleName"] == NULL)
-	$_SESSION["NICK_NAME"] = "N/A";
+	$_SESSION["NICK_NAME"] = "N/A";                      // preffered name the student want to be called by
       else
 	$_SESSION["NICK_NAME"] = $studentDict["middleName"];
 
       if ($studentDict["comment"] == NULL)
-	$_SESSION["COMMENT"] = "No Comment Given";
+	$_SESSION["COMMENT"] = "No Comment Given";           // comment for a meeting the student signed up for
       else
 	$_SESSION["COMMENT"] = $studentDict["comment"];
 

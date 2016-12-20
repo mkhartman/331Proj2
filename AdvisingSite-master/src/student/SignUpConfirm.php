@@ -1,4 +1,5 @@
 <?php
+  // update database for the meeting that the student has sign up, then student has the option of adding comment
 include('../CommonMethods.php');
 session_start();
 

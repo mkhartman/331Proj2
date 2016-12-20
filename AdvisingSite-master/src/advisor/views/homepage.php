@@ -129,22 +129,18 @@ function findStudentsInMeeting($meetingID)
     <h3>
         Welcome <?php echo htmlspecialchars($_SESSION["ADVISOR_FNAME"]); ?>, here are your meetings.
     </h3>
-   <?php
-									   
-  $ID = $_SESSION["ADVISOR_ID"];
-  $open_connection = connectToDB();
-  $result = "SELECT * FROM Advisor WHERE advisorID=$ID";
-  $connect = $open_connection->query($result);
-  $data = $connect->fetch_assoc();
-  $status = $data['closed'];
-  if ($status == "true") {
-    echo "Not Open";
-  }
 
-    ?>
-    <a href="seasonStatus.php">Season Status</a>               
-    <a href="register.php">Create Advisor</a>
-    <a href="logout.php">Log Out</a>
+    <a href="logout.php">
+        <button type="button">Log Out</button>
+    </a>
+	<a href="register.php">
+	<button type="button">Create New Advisor</button>
+    </a>   
+        <a href="security.php">
+        <button type="button">Set/Edit Security Questions</button>
+    </a>
+
+
 
     <hr>
 

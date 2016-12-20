@@ -1,5 +1,5 @@
 <?php
-
+  // delete the student current meeting and then redirect back to homePage
 
 include('../CommonMethods.php');
 session_start();
@@ -28,3 +28,4 @@ $fileName = "deleteMeeting.php";
   unset($_SESSION['MEETING_ID']);
   header('Location:homePage.php');
 
+?>

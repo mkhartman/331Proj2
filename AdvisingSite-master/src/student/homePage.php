@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+// student home page
+// check if the student has logged in
 if($_SESSION["HAS_LOGGED_IN"]){
   include '../CommonMethods.php';
   include 'header.php';
@@ -42,7 +43,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
   $sql = "select * from Student where email = " . "'{$_SESSION["STUDENT_EMAIL"]}'";
   $rs = $COMMON->executeQuery($sql, $_SERVER["SCRIPT_NAME"]);
   $row = mysql_fetch_assoc($rs);
-  
+  $meeting;
   
   echo '<h3>';
   echo 'Welcome ' . $row['firstName'];
@@ -61,8 +62,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
  
   if(mysql_num_rows($select_results) == 0){
     echo "<br>You have not scheduled any appointments.<br>";
+    $meeting = false;
   }
   else{
+    $meeting = true;
     //fetching value from query result
     $results_row = mysql_fetch_array($select_results);
     
@@ -75,11 +78,12 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     
     $meetingDict = mysql_fetch_assoc($rs);
     
-    $_SESSION["CURRENT_MEETING_ID"] = $meetingDict["meetingID"];
-    $_SESSION["CURRENT_START_TIME"] = $meetingDict["start"];
-    $_SESSION["CURRENT_END_TIME"] = $meetingDict["end"];
-    $_SESSION["CURRENT_APPT_BUILDING"] = $meetingDict["buildingName"];
-    $_SESSION["CURRENT_APPT_ROOM"] = $meetingDict["roomNumber"];
+    // $_SESSION variable names are pretty self explanatory
+    $_SESSION["CURRENT_MEETING_ID"] = $meetingDict["meetingID"];        // the meeting id correlating to the database
+    $_SESSION["CURRENT_START_TIME"] = $meetingDict["start"];            // the start time for the meeting
+    $_SESSION["CURRENT_END_TIME"] = $meetingDict["end"];                // the end time for the meeting
+    $_SESSION["CURRENT_APPT_BUILDING"] = $meetingDict["buildingName"];  // the building of the meeting
+    $_SESSION["CURRENT_APPT_ROOM"] = $meetingDict["roomNumber"];        // the roomt number of the meeting
     
     
     echo("Your current meeting:");
@@ -187,12 +191,41 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 <br>
 <br>
 <br>
-<a href="cancelMeeting.php">Cancel Advising Appointment</a>
+  <a onclick="myFunction()">Cancel Advising Appointment</a>
 <br>
 <br>
 <br>
 <a href="logout.php">Log out</a>
 <br>
 <br>
+
+
+<p id="demo"></p>
+
+<?php
+  // creating the pop up window confirming if student want to delete their meeting
+echo '<script language="javascript">';
+?>
+
+
+function myFunction() {
+ 
+  <?php
+    echo 'if (' . $meeting . ') {';
+  ?>
+    if (confirm("Are you sure you want to delete your meeting") == true) {      
+      window.location = 'deleteMeeting.php';
+    } 
+    else
+      window.location = 'homePage.php';
+  <?php
+    echo '}';
+    echo 'else alert("You do not have a meeting.")';
+  
+?> 
+}  
+</script>
+
 </div>
+</body>
 </html>
