@@ -151,7 +151,7 @@ if($_POST){
 	  <option value="Chemistry Education BA">Chemistry Education BA</option>
 </select>
   <span class="error"> <?php $major_error_message;?></span>
-<input class="submit" type="submit" value="Log In">
+<input class="submit" type="submit" value="Sign up">
 <br>
 </form>
 </body>
