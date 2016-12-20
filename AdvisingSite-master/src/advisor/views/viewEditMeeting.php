@@ -61,8 +61,9 @@ session_start();
         $info = $row2->fetch_assoc();
 ?>
       <form action="../utils/forms/editMeeting.php" method="POST">
-	<td align="center"><input type="checkbox" name="student[]" value="<?php echo $info['schoolID'];?>"></td>
-        <td align="center"><?php echo $info['lastName']; ?></td>
+	<td align="center"><input type="checkbox" name="student[]" value="<?php echo $info['schoolID'];?>">
+	<td align="center"><?php echo $info['schoolID'];?></td>
+	<td align="center"><?php echo $info['lastName']; ?></td>
         <td align="center"><?php echo $info['firstName']; ?></td>
         <td align="center"><?php echo $info['major']; ?></td>
         <td align="center"><?php echo $info['career']; ?></td>

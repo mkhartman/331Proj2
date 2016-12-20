@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+include'header.php';
+?>
 <html>
 <head>
     <title>
@@ -7,17 +10,20 @@
 </head>
 
 <body>
+<div class="container">
 
-<h1>Advisor Registration Form</h1>
+<h1> Welcome to the CNMS Advising Site</h1>
+ <img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
 
-<hr>
+ <div class ="sign-up">
+<h2>Advisor Registration Form</h2>
 
 <!-- Use the htmlspecial chars to protect from XSS and CSSR -->
 <form action="../utils/forms/registerAdvisor.php" method="post">
     <ul>
         <li>
             <label>
-                First Name: <input type="text" name="fName">
+            <input type="text" name="fName" placeholder="First Name">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_FNAME"])) {
@@ -35,7 +41,7 @@
 	-->
         <li>
             <label>
-                Last Name: <input type="text" name="lName">
+             <input type="text" name="lName" placeholder="Last Name">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_LNAME"])) {
@@ -47,7 +53,7 @@
 
         <li>
             <label>
-                E-mail: <input type="email" name="email">
+               <input type="email" name="email" placeholder="E-mail">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_EMAIL"])) {
@@ -59,7 +65,7 @@
 
 	<li>
 	    <label>
-              	Password: <input type="password" name="pass">
+               <input type="password" name="pass" placeholder="Password">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_PASS"])) {
@@ -71,7 +77,7 @@
 
         <li>
             <label>
-                Office Building Name: <input type="text" name="bldgName">
+             <input type="text" name="bldgName" placeholder="Office Building Name">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_BLDGNAME"])) {
@@ -83,7 +89,7 @@
 
         <li>
             <label>
-                Office Room: <input type="text" name="officeRm">
+               <input type="text" name="officeRm" placeholder="Room Number">
             </label>
             <?php
             if (isset($_SESSION["ERROR_ADVISOR_REGISTRATION_OFFICERM"])) {
@@ -92,8 +98,12 @@
             }
             ?>
         </li>
-        <input type="submit" name="Register!">
+        <input class="submit" type="submit" name="Register!">
+  <a href="homepage.php">Back to Homepage</a>
     </ul>
+</div>
+<br><br>
+</div>
 </form>
 </body>
 </html>

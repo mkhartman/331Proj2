@@ -36,13 +36,6 @@ session_start();
       $meeting = "SELECT * FROM Meeting WHERE meetingID=$selectedMeetingID";
       $line = $open_connection->query($meeting);
       $data = $line->fetch_assoc();
-?>
-
-      <td align="center"><?php echo $data['start'];?></td>    
-      <td align="center"><?php echo $data['end'];?></td>    
-<?php
-
-
       $all_students = array();
 
       $students = "SELECT * FROM StudentMeeting WHERE MeetingID=$selectedMeetingID";
@@ -59,13 +52,16 @@ session_start();
         $row2 = $open_connection->query($findStudent);
         $info = $row2->fetch_assoc();	
 ?>
+      <td align="center"><?php echo $data['start'];?></td>    
+      <td align="center"><?php echo $data['end'];?></td>    
+
 	<td align="center"><?php echo $info['schoolID']; ?></td>
 	<td align="center"><?php echo $info['lastName']; ?></td>
 	<td align="center"><?php echo $info['firstName']; ?></td>
 	<td align="center"><?php echo $info['major']; ?></td>
 	<td align="center"><?php echo $info['career']; ?></td>
 	<td align="center"><?php echo $info['comment']; ?></td>
-	
+<tr>	
 <?php
       }
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../utils/dbconfig.php';
-include '../../student/header.php'
+include 'header.php'
 ;
 // Checks to see if the user is logged in, if so it redirects them to homepage
 if (isset($_SESSION["HAS_LOGGED_IN"])) {
@@ -55,32 +55,34 @@ if ($_POST) {
 <head>
     <title>Advisor Login Portal</title>
 </head>
-
 <body>
-    
-<h1>
-    Advisor Login Page
-</h1>
 
+<div class="container">   
+<h1>Welcome to the CNMS Advising Site</h1>
+<img src="https://pbs.twimg.com/profile_images/651861816683851776/zGSMy69H.jpg" class ="create"/>
+
+<div class ="login">
+<h1> Advisor Login Page</h1>
 <hr>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
     <label>
         <!-- Only email needs an error, the rest is handled by HTML 5 -->
-        E-mail: <input type="text" name="email" required>
+        <input type="text" name="email" placeholder="Email"required>
         <br>
     </label>
     <label>
-        Password: <input type="password" name="pass" required>
+        <input type="password" name="pass" placeholder="Password" required>
         <br>
     </label>
     <label>
-        <input type="submit">
+        <input class="submit" type="submit">
     </label>
 
-  <a href="forgotPassEmail.php">
-  <button type="button">Forgot Password?</button>
-  </a>
-
+  <a href="forgotPassEmail.php">Forgot Password?</a>
+  
 </form>
+<br><br><br>
+</div>
+</div>
 </body>
 </html>

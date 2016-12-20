@@ -27,7 +27,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     <th>Type of Meeting</th>
     <th>Number of students</th>
   </tr>
-<tr>
+
 <?php if ($_SESSION["HAS_LOGGED_IN"]) { ?>
     <h3>
         Welcome <?php echo htmlspecialchars($_SESSION["ADVISOR_FNAME"]); ?>
@@ -90,7 +90,7 @@ foreach ($all_meetings as $appointment) {
             </form>
             <form action="viewStudents.php" method="POST">
             <input name="meetingID" value="<?php echo $appointment['meetingID']; ?>" hidden/>
-            <td align="center"><input type="submit" value="<?php if ($appointment['numStudents']==0) {
+            <td align="center"><input type="submit" value="<?php if ($appointment['numStudents']<0) {
             echo "Empty";
             }
             else {
