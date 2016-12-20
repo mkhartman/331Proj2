@@ -1,12 +1,17 @@
 <?php
 include('../CommonMethods.php');
 session_start();
+include'header.php';
+
 $COMMON = new Common(false);
 $fileName = "chooseIndividualMeeting.php";
 //checks if season is closed
 $checkSeason = "SELECT * FROM `Advisor` WHERE `closed`=False";
 $result = $COMMON->executequery($checkSeason, $fileName);
 $allRows = mysql_num_rows($result);
+?>
+<div class="container">
+<?php
 if($allRows) { 
   //check if the student has a meeting
   $checkForMeeting = "Select * FROM StudentMeeting Where StudentMeeting.StudentID =". $_SESSION['STUDENT_ID'];
@@ -23,8 +28,8 @@ if($allRows) {
     
     // choosing which type of appointment
     echo'<tr><td>Choose your type of appointment: </td><td> <select name="ddApointment">';
-    echo'<option>Individual</option>';
     echo'<option>Group</option>';
+    echo'<option>Individual</option>';
     echo'</select></td></tr><br><br>';
     
     // choosing date range
@@ -85,16 +90,19 @@ if($allRows) {
     echo'<option>Ms. Christine Powers</option>';
     echo'<option>CNMS Advisors</option>';
 */
-    echo'<br><br><tr><td>';
-    echo'<button name="Confirm" type="submit">Confirm</button>';
-    echo'</td></tr></form>';
     echo'</table>';
-    echo'</body>';
-    echo'</html>';
+    echo'<input class="submit" name="Confirm" type="submit">';
+    echo'</form>';
   }
 }
 else {
   header('Location:closed.php');
 }    
+echo '<form action="homePage.php">';
+echo '<input class="submit" type="submit" value ="Home">';
+echo '</form>';
+
 ?>
-<a href="homePage.php">Back to homepage</a>
+</div>
+</body>
+</html>

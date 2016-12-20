@@ -1,8 +1,11 @@
 <?php
 include('../CommonMethods.php');
+include'header.php';
 session_start();
 
-
+?>
+<div class="container">
+<?php
 $id = $_POST['appointment'];
 
 $debug = false;
@@ -113,9 +116,9 @@ echo "Would you like to leave a comment/question to your Advisor?\n"
 <form action="addComment.php" method="post" name="addComment">
 <textarea name="comment" rows="5" cols="40">Enter your comments here</textarea>
 <br>
-<button name="Confirm" type="submit">Add Comment</button>
+<input class="submit" type="submit" value="Add Comment">
 </form>
 
 <form action="homePage.php">
-   <input type="submit" value = "Go Home">
+  <input class="submit" type="submit" value = "Go Home">
 </form>
