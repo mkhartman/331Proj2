@@ -1,6 +1,7 @@
 <?php
 session_start();
 include'../../CommonMethods.php';
+include 'header.php';
 $email_error_message = $login_error = $bestFri_error_message = $highSch_error_message = $petName_error_message = "";
 
 
@@ -33,13 +34,6 @@ if(isset ($_POST["email"])){
 
 
     
-//echo $numRows;
-    //$number = $numRows['bestFriend'];
-    //echo $number;
-
-
- 
-
     //if email field is left empty or does not exist in table                                                                                 
     if(empty($_POST["email"]) || mysql_num_rows($result_email) == 0){
       $_SESSION["emailErrorMessage"] = "*Please enter a valid email*";
@@ -125,6 +119,7 @@ if(isset ($_POST["bestFri"])) {
 </head>
 
    <body>
+<div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   
   <h1> Forgot your password? </h1>
@@ -153,13 +148,12 @@ if(isset ($_POST["bestFri"])) {
   <br>
 
   <input type="hidden" name="email" value= <?php echo htmlspecialchars($advisorEmail)?>>
-  <input type="submit">
-
-  <a href="forgotPassEmail.php">
-  <button type="button">Back</button>
-  </a>
+  <input class="submit" type="submit">
+  
+  <a href="forgotPassEmail.php">Back </a>
 
   </ul>
   </form>
+  </div>
   </body>
   </html>

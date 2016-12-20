@@ -1,5 +1,6 @@
 <?php
 include '../../CommonMethods.php';
+include 'header.php';
 session_start();
 //declare and define empty login_error                                        
 $login_error = "";
@@ -17,6 +18,7 @@ $email_error_message = "";
 
 
    <body>
+<div class="container">
  <!-- <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> -->
 
 <h1>
@@ -38,14 +40,14 @@ $email_error_message = "";
   unset($_SESSION["emailErrorMessage"]);
 } ?> </span>
   <br>
-        <input type="submit">
+        <input class="submit" type="submit">
+  <br>
   </form>
-
-<a href="index.php">
-  <button type="button">Back</button>
-  </a>
+<br>
+<a href="index.php">Back </a>
 
   
 </form>
+</div>
 </body>
 </html>
