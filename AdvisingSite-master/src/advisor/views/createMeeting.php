@@ -79,18 +79,17 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
                     </select>
                 </label>
             </li>
-
-                        <li>
-                                <label>
-       Meeting Advisor:
-                                        <select name="advisor">
-       <?php foreach ($advisorRows as $aRow) { ?>
-					       <option value=<?php htmlspecialchars($aRow["advisorID"]) ?>><?php echo htmlspecialchars($aRow["firstName"]);
-					       echo htmlspecialchars($aRow["lastName"]); ?></option>
+<li> 
+				<label>
+					Meeting Advisor:
+					<select name="advisor">
+		                               <?php foreach ($advisorNames as $bRow) { ?>
+											//<?php echo '<option value=' . htmlspecialchars($bRow["advisorID"]) . '>' . htmlspecialchars($bRow["lastName"]) . '</option>' ?>
+											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo htmlspecialchars($bRow["lastName"]); ?> </option>
 					       <?php } ?>
-                                </label>
-                        </li>
-
+		                        </select>
+</label>
+		
             <label>
                 <input type="submit">
             </label>
