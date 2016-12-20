@@ -29,7 +29,6 @@ session_start();
 	  $row = $open_connection->query($findID);
 	  $delete = $row->fetch_assoc();
 	  $studentID = $delete['StudentID'];
-	  echo $studentID;
 	  //deletes from student meeting.
 	  $deleteStudent = "DELETE FROM StudentMeeting WHERE StudentID=$studentID";	
 	  $open_connection->query($deleteStudent);
@@ -58,3 +57,8 @@ session_start();
 
     }
 ?>
+
+<a href="../../views/homepage.php">Back to homepage</a>
+</div>
+</body>
+</htmls>
