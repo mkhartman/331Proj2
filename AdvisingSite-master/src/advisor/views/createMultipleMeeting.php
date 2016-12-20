@@ -14,15 +14,14 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
         Advisor
       WHERE
         1
-      LIMIT
-        0, 30
     ";
-    $advisorSearchResults = $open_connection->query($searchAdvisorMeetings);
-//    $allRows = $searchResults->fetch_all(MYSQLI_ASSOC);
+    $advisorSearchResults = $open_connection->query($searchAdvisors);
+
     $advisorNames = array();
     while ($advisorRow = $advisorSearchResults->fetch_assoc()) {
         array_push($advisorNames, $advisorRow);
     }
+	$open_connection->close();
 }
 
 ?>
@@ -33,10 +32,10 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 <body>
 <div class="container">
 <h1>
-    Create A Single Meeting
+    Create Multiple Meeting
 </h1>
 
-    <form action="../utils/forms/createMeeting.php" method="POST">
+    <form action="../utils/forms/createMultipleMeeting.php" method="POST">
 
         <ul>
 			
@@ -55,7 +54,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 			
 			<li>
 				<label>
-					Repeat every <input type="number" name="meetingRepeatDays"> days until <input type="date" name="meetingRepeatD">
+					Repeat meetings every day for <input type="number" name="meetingRepeatDays" /> days 
 				</label>
 			</li>
 				
@@ -65,12 +64,6 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
                     Meeting Start Time
                     <input type="time" name="meetingStartTime">
                 </label>
-                <?php
-                if (isset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"])) {
-                    echo $_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"];
-                    unset($_SESSION["ERROR_ADVISOR_MEETING_DATE_OR_TIME"]);
-                }
-                ?>
             </li>
 
 			<li>
@@ -78,9 +71,9 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
                     Meeting Length (Minutes)
                     <input type="number" name="meetingLength">
                 </label>
-				<label>
-					Repeat every <input type="number" name="meetingRepeatTime"> minutes until <input type="time" name="meetingRepeat">
-				</label>
+			<label>
+				Repeat every <input type="number" name="meetingRepeatTime"> minutes until <input type="time" name="meetingRepeat">
+			</label>
             </li>
 			
             <li>
@@ -124,8 +117,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 					Meeting Advisor:
 					<select name="advisor">
 		                               <?php foreach ($advisorNames as $bRow) { ?>
-											//<?php echo '<option value=' . htmlspecialchars($bRow["advisorID"]) . '>' . htmlspecialchars($bRow["lastName"]) . '</option>' ?>
-											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo htmlspecialchars($bRow["lastName"]); ?> </option>
+											<option value="<?php echo htmlspecialchars($bRow["advisorID"]) ?>"> <?php echo(htmlspecialchars($bRow["firstName"] . ' ' .htmlspecialchars($bRow["lastName"]); ?> </option>
 					       <?php } ?>
 		                        </select>
 				</label>
