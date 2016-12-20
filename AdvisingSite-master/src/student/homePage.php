@@ -29,6 +29,14 @@ if($_SESSION["HAS_LOGGED_IN"]){
 <html>
 <head>
      <title>Student Homepage</title>
+<style>
+.rightPanel{
+position: relative;
+  
+left: 30%;
+}
+
+</style>
 </head>
 <body>
 <div class="container">
@@ -87,6 +95,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     
     
     echo("Your current meeting:");
+    echo('<div class="rightPanel">');
     echo("<table>");
     
     
@@ -170,7 +179,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
     echo("<td>Comment for Meeting</td>");
     echo("<td>" . $_SESSION["COMMENT"] . "</td>");
     echo("</table>");
-    
+    echo('</div>');
   }
   
 }
@@ -179,7 +188,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
   
 </body>
 </html>
-
+<div class="leftPanel">
 <br>
 <br>
 <br>
@@ -201,7 +210,7 @@ if ($_SESSION["HAS_LOGGED_IN"]) {
 
 
 <p id="demo"></p>
-
+</div>
 <?php
   // creating the pop up window confirming if student want to delete their meeting
 echo '<script language="javascript">';
